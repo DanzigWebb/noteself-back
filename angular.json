@@ -72,7 +72,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "noteself-front:build"
+            "browserTarget": "noteself-front:build",
+            "proxyConfig": "src/proxy.conf.js"
           },
           "configurations": {
             "production": {
