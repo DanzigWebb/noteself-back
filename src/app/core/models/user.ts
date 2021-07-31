@@ -4,6 +4,7 @@ export interface UserDto {
   password: string;
   email: string;
   phone?: string;
+  token?: string;
 }
 
 export interface UserLoginDto {
