@@ -53,6 +53,16 @@ export class UserState {
     );
   }
 
+  @Action(UserActions.Update)
+  update({setState}: StateContext<UserStateModel>, {payload}: UserActions.Update) {
+    setState({
+      isLogin: true,
+      user: {
+        ...payload,
+      },
+    });
+  }
+
   @Action(UserActions.Logout)
   logout({setState}: StateContext<UserStateModel>) {
     setState({isLogin: false});

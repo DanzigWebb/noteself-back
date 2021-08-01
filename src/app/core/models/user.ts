@@ -4,7 +4,8 @@ export interface UserDto {
   password: string;
   email: string;
   phone?: string;
-  token?: string;
+  accessToken?: string;
+  refreshToken?: string;
 }
 
 export interface UserLoginDto {

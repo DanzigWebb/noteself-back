@@ -23,6 +23,12 @@ export class UserFacade {
     );
   }
 
+  update(payload: UserDto): Observable<UserStateModel> {
+    return this.store.dispatch(new UserActions.Update(payload)).pipe(
+      switchMap(() => this.state$),
+    );
+  }
+
   logout(): Observable<UserStateModel> {
     return this.store.dispatch(new UserActions.Logout()).pipe(
       switchMap(() => this.state$),
