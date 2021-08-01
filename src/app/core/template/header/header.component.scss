@@ -1,0 +1,15 @@
+@import "src/styles/vars";
+
+.header {
+	@include flex;
+	width: 100%;
+	
+	&-spacer {
+		flex: 1;
+	}
+	
+	&-user {
+		font-size: 14px;
+		font-weight: normal;
+	}
+}

@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginPageModule } from "@pages/login-page/login-page.module";
 import { StateModule } from "@state/state.module";
 import { HttpClientModule } from "@angular/common/http";
+import { TemplateModule } from "@core/template/template.module";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,8 @@ import { HttpClientModule } from "@angular/common/http";
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    // Core
+    TemplateModule,
     // Pages
     LoginPageModule,
 
