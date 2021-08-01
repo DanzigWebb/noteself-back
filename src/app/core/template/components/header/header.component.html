@@ -2,8 +2,11 @@
     <header class="header">
         <div class="header-logo">header</div>
         <div class="header-spacer"></div>
-        <div class="header-user">
-            <button mat-icon-button>
+        <div class="header-user" *ngIf="userState">
+            <button mat-icon-button *ngIf="!userState.isLogin">
+                <mat-icon>login</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="userState.isLogin">
                 <mat-icon>account_box</mat-icon>
             </button>
         </div>
