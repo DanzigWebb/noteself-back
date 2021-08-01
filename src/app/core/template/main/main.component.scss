@@ -1,9 +1,16 @@
+@import "src/styles/vars";
+
 .page  {
 	height: 100%;
-	display: flex;
-	flex-direction: column;
+	@include flex(column);
 	
 	.main {
 		flex: 1;
+		
+		@include flex;
+		
+		&-content {
+			flex: 1;
+		}
 	}
 }

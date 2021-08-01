@@ -1,0 +1,11 @@
+@import "src/styles/vars";
+
+.navbar {
+	padding: $gutter;
+	box-sizing: border-box;
+	
+	min-width: 220px;
+	
+	box-shadow: 2px 1px 3px -3px #000;
+	height: 100%;
+}
