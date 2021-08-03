@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserFacade } from "@state/user/user.facade";
-import { take, tap } from "rxjs/operators";
+import { map, take } from "rxjs/operators";
 import { Routers } from "@core/enums/routers.enum";
 
 @Injectable({
@@ -21,11 +21,41 @@ export class LoginGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> {
     return this.user.isLogin$.pipe(
       take(1),
-      tap((isUser) => !isUser && this.goToLogin()),
+      map((isLogin) => this.action(isLogin)),
     );
   }
 
-  private goToLogin() {
+  action(isLogin: boolean): boolean {
+    !isLogin && this.goToLogin();
+    return isLogin;
+  }
+
+  goToLogin() {
     return this.router.navigate([Routers.login]);
   }
+
+  goToHome() {
+    return this.router.navigate([Routers.home]);
+  }
 }
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserGuard extends LoginGuard {
+  action(isLogin: boolean): boolean {
+    !isLogin && this.goToLogin();
+    return isLogin;
+  }
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GuestGuard extends LoginGuard {
+  action(isLogin: boolean): boolean {
+    isLogin && this.goToHome();
+    return !isLogin;
+  }
+}
+
