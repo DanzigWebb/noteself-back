@@ -1,0 +1,6 @@
+@import "src/styles/vars";
+
+.not-found {
+	height: 100%;
+	@include flex(row, center, center);
+}

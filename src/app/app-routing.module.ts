@@ -5,19 +5,24 @@ import { LoginPageComponent } from "@pages/login-page/login-page.component";
 import { Routers } from "@core/enums/routers.enum";
 import { LoginGuard } from "@core/guards/login.guard";
 import { GuestGuard } from "@core/guards/guest.guard";
+import { NotFoundPageComponent } from "@pages/not-found-page/not-found-page.component";
 
 const routes: Routes = [
   {
     path: Routers.home,
     component: MainComponent,
     canActivate: [LoginGuard],
+    children: [],
   },
   {
     path: Routers.login,
     component: LoginPageComponent,
     canActivate: [GuestGuard],
   },
-  // Todo: реализовать страницу 404
+  {
+    path: '**',
+    component: NotFoundPageComponent,
+  },
 ];
 
 @NgModule({
