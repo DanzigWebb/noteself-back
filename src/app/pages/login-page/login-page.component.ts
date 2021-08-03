@@ -5,6 +5,8 @@ import { UserLoginDto } from "@models/user";
 import { catchError } from "rxjs/operators";
 import { HttpErrorResponse } from "@angular/common/http";
 import { throwError } from "rxjs";
+import { Routers } from "@core/enums/routers.enum";
+import { Router } from "@angular/router";
 
 enum LoginValidatorsEnum {
   name = 'invalidLogin'
@@ -31,6 +33,7 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private user: UserFacade,
+    private router: Router,
   ) {
   }
 
@@ -52,8 +55,8 @@ export class LoginPageComponent implements OnInit {
         alert(err.message);
         return throwError(err);
       }),
-    ).subscribe(data => {
-      console.log(data);
+    ).subscribe(() => {
+      this.goToHome();
     });
   }
 
@@ -62,5 +65,9 @@ export class LoginPageComponent implements OnInit {
     const password = this.form.value.password;
 
     return {name, password};
+  }
+
+  private goToHome() {
+    return this.router.navigate([Routers.home]);
   }
 }
