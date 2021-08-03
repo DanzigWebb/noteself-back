@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { UserActions } from './user.actions';
-import { UserDto } from "@models/user";
+import { UserDto } from "@models/user.interface";
 import { ApiService } from "@services/api.service";
 import { tap } from "rxjs/operators";
 import { USER_STORAGE, UserStorage } from "@shared/storages/user.storage";

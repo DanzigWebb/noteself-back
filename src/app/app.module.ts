@@ -10,7 +10,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { TemplateModule } from "@core/template/template.module";
 import { UserFacade } from "@state/user/user.facade";
 import { USER_STORAGE, UserStorage } from "@shared/storages/user.storage";
-import { UserDto } from "@models/user";
+import { UserDto } from "@models/user.interface";
 
 function initializeApp(storage: UserStorage, facade: UserFacade): () => Promise<any> {
   return () => new Promise((resolve) => {

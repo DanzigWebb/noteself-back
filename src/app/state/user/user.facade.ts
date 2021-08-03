@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
 import { UserState, UserStateModel } from "@state/user/user.state";
 import { Observable } from "rxjs";
-import { UserDto, UserLoginDto } from "@models/user";
+import { UserDto, UserLoginDto } from "@models/user.interface";
 import { UserActions } from "@state/user/user.actions";
 import { switchMap } from "rxjs/operators";
 

@@ -1,4 +1,4 @@
-import { UserDto, UserLoginDto } from "@models/user";
+import { UserDto, UserLoginDto } from "@models/user.interface";
 
 export namespace UserActions {
   export class Login {

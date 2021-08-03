@@ -2,7 +2,7 @@ import { AbstractStorage } from "@shared/storages/abstract.storage";
 import { inject, Injectable, InjectionToken } from "@angular/core";
 import { DOCUMENT } from "@angular/common";
 import { StorageEnum } from "@shared/storages/storage.enum";
-import { UserDto } from "@models/user";
+import { UserDto } from "@models/user.interface";
 import { getObjectKeysAsKeyof } from "@utils/common";
 
 

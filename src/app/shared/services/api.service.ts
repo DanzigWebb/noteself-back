@@ -1,8 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { APP_CONFIG, AppConfig } from "@core/config";
-import { UserDto, UserLoginDto } from "@models/user";
+import { UserDto, UserLoginDto } from "@models/user.interface";
 import { Observable } from "rxjs";
+import { NoteSubjectDto } from "@models/subject.interface";
+import { NoteDto } from "@models/note.interface";
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +23,13 @@ export class ApiService {
 
   login(dto: UserLoginDto): Observable<UserDto> {
     return this.http.post<UserDto>(`${this.url}auth/login`, dto);
+  }
+
+  getSubjects(): Observable<NoteSubjectDto[]> {
+    return this.http.get<NoteSubjectDto[]>(`${this.url}subject`);
+  }
+
+  getNotes(): Observable<NoteDto[]> {
+    return this.http.get<NoteDto[]>(`${this.url}note`);
   }
 }
