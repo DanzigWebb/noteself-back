@@ -11,6 +11,7 @@ import { TemplateModule } from "@core/template/template.module";
 import { UserFacade } from "@state/user/user.facade";
 import { USER_STORAGE, UserStorage } from "@shared/storages/user.storage";
 import { UserDto } from "@models/user.interface";
+import { StartPageModule } from "@pages/start-page/start-page.module";
 
 function initializeApp(storage: UserStorage, facade: UserFacade): () => Promise<any> {
   return () => new Promise((resolve) => {
@@ -37,6 +38,7 @@ function initializeApp(storage: UserStorage, facade: UserFacade): () => Promise<
     TemplateModule,
     // Pages
     LoginPageModule,
+    StartPageModule,
     // State
     StateModule,
   ],
