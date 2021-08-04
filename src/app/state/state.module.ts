@@ -10,7 +10,11 @@ import { SubjectState } from "@state/subject/subject.state";
 
 
 @NgModule({
-  providers: [UserFacade, NoteFacade, SubjectFacade],
+  providers: [
+    UserFacade,
+    NoteFacade,
+    SubjectFacade,
+  ],
   imports: [
     NgxsModule.forRoot(
       [

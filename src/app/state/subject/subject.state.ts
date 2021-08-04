@@ -3,6 +3,7 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { ApiService } from "@services/api.service";
 import { tap } from "rxjs/operators";
 import { SubjectActions } from "@state/subject/subject.actions";
+import { Injectable } from "@angular/core";
 
 
 export interface SubjectStateModel {
@@ -17,6 +18,7 @@ const defaults: SubjectStateModel = {
   name: 'subject',
   defaults,
 })
+@Injectable()
 export class SubjectState {
   @Selector()
   static state(s: SubjectStateModel): SubjectStateModel {
