@@ -28,7 +28,8 @@ export class ApiService {
   }
 
   getSubjects(): Observable<NoteSubjectDto[]> {
-    return this.http.get<NoteSubjectDto[]>(`${this.url}subject`);
+    const headers = this.createHeader();
+    return this.http.get<NoteSubjectDto[]>(`${this.url}subject`, {headers});
   }
 
   getNotes(): Observable<NoteDto[]> {

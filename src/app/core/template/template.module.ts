@@ -7,6 +7,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { HeaderComponent } from "@core/template/components/header/header.component";
 import { NavbarComponent } from "@core/template/components/navbar/navbar.component";
 import { RouterModule } from "@angular/router";
+import { MatListModule } from "@angular/material/list";
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { RouterModule } from "@angular/router";
     MatIconModule,
     MatButtonModule,
     RouterModule,
+    MatListModule,
   ],
   exports: [
     MainComponent,

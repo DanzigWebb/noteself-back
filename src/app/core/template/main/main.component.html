@@ -2,7 +2,7 @@
     <app-header [userState]="userState$ | async"></app-header>
 
     <main class="main">
-        <app-navbar></app-navbar>
+        <app-navbar [subjectState]="subjectState$ | async"></app-navbar>
 
         <div class="main-content">
             <router-outlet></router-outlet>

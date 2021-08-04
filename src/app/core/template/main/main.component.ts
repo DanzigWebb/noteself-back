@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UserFacade } from "@state/user/user.facade";
+import { SubjectFacade } from "@state/subject/subject.facade";
 
 @Component({
   selector: 'app-main',
@@ -10,13 +11,16 @@ import { UserFacade } from "@state/user/user.facade";
 export class MainComponent implements OnInit {
 
   userState$ = this.userFacade.state$;
+  subjectState$ = this.subjectFacade.state$;
 
   constructor(
     private userFacade: UserFacade,
+    private subjectFacade: SubjectFacade,
   ) {
   }
 
   ngOnInit(): void {
+    this.subjectFacade.getAll();
   }
 
 }

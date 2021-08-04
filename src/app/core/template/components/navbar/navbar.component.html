@@ -1,3 +1,9 @@
 <div class="navbar">
     Navbar
+    
+    <mat-nav-list class="navbar-subjects" *ngIf="subjectState">
+        <mat-list-item *ngFor="let subject of subjectState.subjects">
+            <span>{{subject.title}}</span>
+        </mat-list-item>
+    </mat-nav-list>
 </div>
