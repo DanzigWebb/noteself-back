@@ -3,4 +3,9 @@
 .icon {
 	font-size: 14px;
 	@include flex(row, center, center);
+	user-select: none;
+}
+
+.title {
+	user-select: none;
 }
