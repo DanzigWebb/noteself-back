@@ -1,0 +1,6 @@
+@import "src/styles/vars";
+
+.icon {
+	font-size: 14px;
+	@include flex(row, center, center);
+}

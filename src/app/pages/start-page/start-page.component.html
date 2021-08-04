@@ -3,6 +3,7 @@
         <mat-list-item
             *ngFor="let note of (notes$ | async)"
         >
+            <mat-icon class="icon" color="accent">splitscreen</mat-icon>
             <span>{{note.title}}</span>
         </mat-list-item>
     </mat-nav-list>
