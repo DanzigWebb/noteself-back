@@ -1,16 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
-import { NoteState } from "@state/note/note.state";
 import { Observable } from "rxjs";
-import { SubjectStateModel } from "@state/subject/subject.state";
+import { SubjectState, SubjectStateModel } from "@state/subject/subject.state";
 import { NoteSubject } from "@models/subject.interface";
 import { switchMap } from "rxjs/operators";
 import { SubjectActions } from "@state/subject/subject.actions";
 
 @Injectable()
 export class SubjectFacade {
-  @Select(NoteState.state) state$!: Observable<SubjectStateModel>;
-  @Select(NoteState.notes) notes$!: Observable<NoteSubject[]>;
+  @Select(SubjectState.state) state$!: Observable<SubjectStateModel>;
+  @Select(SubjectState.notes) notes$!: Observable<NoteSubject[]>;
 
   constructor(
     private store: Store,
