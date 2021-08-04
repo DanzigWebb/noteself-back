@@ -1,8 +1,17 @@
 <div class="navbar">
     Navbar
-    
-    <mat-nav-list class="navbar-subjects" *ngIf="subjectState">
-        <mat-list-item *ngFor="let subject of subjectState.subjects">
+
+    <mat-nav-list class="subjects" *ngIf="subjectState">
+        <mat-list-item class="subjects-item">
+            <mat-icon class="subjects-icon" color="primary">folder_open</mat-icon>
+            <span>All Subjects</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item
+            *ngFor="let subject of subjectState.subjects"
+            class="subjects-item"
+        >
+            <mat-icon class="subjects-icon" color="primary">folder_open</mat-icon>
             <span>{{subject.title}}</span>
         </mat-list-item>
     </mat-nav-list>
