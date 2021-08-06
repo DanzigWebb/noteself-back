@@ -3,11 +3,11 @@
 
     <main class="main">
         <app-navbar [subjectState]="subjectState$ | async"></app-navbar>
+        <app-notebar [noteState]="noteState$ | async"></app-notebar>
 
         <div class="main-content">
             <router-outlet></router-outlet>
         </div>
     </main>
 </div>
-
 

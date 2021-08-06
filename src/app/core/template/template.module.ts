@@ -9,6 +9,7 @@ import { NavbarComponent } from "@core/template/components/navbar/navbar.compone
 import { RouterModule } from "@angular/router";
 import { MatListModule } from "@angular/material/list";
 import { DragColumnModule } from "@components/drag-column/drag-column.module";
+import { NotebarComponent } from './components/notebar/notebar.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { DragColumnModule } from "@components/drag-column/drag-column.module";
     MainComponent,
     HeaderComponent,
     NavbarComponent,
+    NotebarComponent,
   ],
   imports: [
     CommonModule,

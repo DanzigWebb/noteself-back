@@ -1,20 +1,5 @@
 @import "src/styles/vars";
 
-.icon {
-	font-size: 14px;
-	@include flex(row, center, center);
-	user-select: none;
-}
-
-.title {
-	user-select: none;
-}
-
 .container {
-	height: 100%;
-}
-
-.notes-column {
-	width: 300px;
 	height: 100%;
 }
