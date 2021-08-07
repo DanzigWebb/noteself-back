@@ -2,8 +2,14 @@
     <app-header [userState]="userState$ | async"></app-header>
 
     <main class="main">
-        <app-navbar [subjectState]="subjectState$ | async"></app-navbar>
-        <app-notebar [noteState]="noteState$ | async"></app-notebar>
+        <app-navbar
+            [subjectState]="subjectState$ | async">
+        </app-navbar>
+
+        <app-notebar
+            [noteState]="noteState$ | async"
+            (checkNote)="editNote($event)">
+        </app-notebar>
 
         <div class="main-content">
             <router-outlet></router-outlet>

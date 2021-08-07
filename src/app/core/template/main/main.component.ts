@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UserFacade } from "@state/user/user.facade";
 import { SubjectFacade } from "@state/subject/subject.facade";
 import { NoteFacade } from "@state/note/note.facade";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-main',
@@ -19,11 +20,16 @@ export class MainComponent implements OnInit {
     private userFacade: UserFacade,
     private subjectFacade: SubjectFacade,
     private noteFacade: NoteFacade,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
     this.subjectFacade.getAll();
+    this.noteFacade.getAll();
   }
 
+  editNote(id: number) {
+    this.router.navigate([id])
+  }
 }

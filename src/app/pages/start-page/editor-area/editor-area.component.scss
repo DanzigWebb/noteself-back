@@ -1,0 +1,11 @@
+@import "src/styles/vars";
+
+.editor {
+	padding: $gutter;
+	
+	&-title {
+		font-size: 24px;
+		font-weight: bold;
+		margin-bottom: $gutter;
+	}
+}
