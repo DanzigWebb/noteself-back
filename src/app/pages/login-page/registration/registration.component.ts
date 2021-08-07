@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { filter, takeUntil, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -11,6 +11,8 @@ import { UserRegistrationDto } from '@models/user.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegistrationComponent implements OnInit, OnDestroy {
+
+  @Output() onSubmit = new EventEmitter<UserRegistrationDto>();
 
   public form: FormGroup;
 
@@ -37,7 +39,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.comparePasswords();
   }
 
-  onSubmit() {
+  submit() {
     if (!this.form.valid) {
       return;
     }
@@ -50,7 +52,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       phone: this.form.get('phone')?.value
     };
 
-    console.log(dto);
+    this.onSubmit.emit(dto);
   }
 
   private comparePasswords(): void {

@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { APP_CONFIG, AppConfig } from "@core/config";
-import { UserDto, UserLoginDto } from "@models/user.interface";
-import { Observable } from "rxjs";
-import { NoteSubjectDto } from "@models/subject.interface";
-import { NoteDto } from "@models/note.interface";
-import { USER_STORAGE, UserStorage } from "@shared/storages/user.storage";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { APP_CONFIG, AppConfig } from '@core/config';
+import { UserDto, UserLoginDto, UserRegistrationDto } from '@models/user.interface';
+import { Observable } from 'rxjs';
+import { NoteSubjectDto } from '@models/subject.interface';
+import { NoteDto } from '@models/note.interface';
+import { USER_STORAGE, UserStorage } from '@shared/storages/user.storage';
 
 @Injectable({
   providedIn: 'root',
@@ -43,5 +43,9 @@ export class ApiService {
 
     return new HttpHeaders()
       .append('Authorization', `Bearer ${token}`);
+  }
+
+  registration(dto: UserRegistrationDto): Observable<UserDto> {
+    return this.http.post<UserDto>(`${this.url}user`, dto);
   }
 }

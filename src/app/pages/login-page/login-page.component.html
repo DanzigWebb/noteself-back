@@ -1,6 +1,6 @@
 <div class="login">
     <app-login *ngIf="view === 'login'"></app-login>
-    <app-registration *ngIf="view === 'registration'"></app-registration>
+    <app-registration *ngIf="view === 'registration'" (onSubmit)="registration($event)"></app-registration>
     <button class="login-btn" mat-button color="primary" (click)="toggleView()">
         <span *ngIf="view === 'login'">Registration</span>
         <span *ngIf="view === 'registration'">Login</span>

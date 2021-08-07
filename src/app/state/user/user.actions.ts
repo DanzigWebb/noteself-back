@@ -1,9 +1,14 @@
-import { UserDto, UserLoginDto } from "@models/user.interface";
+import { UserDto, UserLoginDto, UserRegistrationDto } from '@models/user.interface';
 
 export namespace UserActions {
   export class Login {
     static readonly type = '[User] Login';
     constructor(public payload: UserLoginDto) {}
+  }
+
+  export class Registration {
+    static readonly type = '[User] Registration';
+    constructor(public payload: UserRegistrationDto) {}
   }
 
   export class Update {

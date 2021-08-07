@@ -1,4 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { UserRegistrationDto } from '@models/user.interface';
+import { UserFacade } from '@state/user/user.facade';
+import { Router } from '@angular/router';
+import { Routers } from '@core/enums/routers.enum';
 
 type FormView = 'login' | 'registration';
 
@@ -12,7 +16,10 @@ export class LoginPageComponent implements OnInit {
 
   view: FormView = 'login';
 
-  constructor() {
+  constructor(
+    private user: UserFacade,
+    private router: Router
+  ) {
   }
 
   ngOnInit(): void {
@@ -20,9 +27,19 @@ export class LoginPageComponent implements OnInit {
 
   toggleView() {
     if (this.view === 'login') {
-      this.view = 'registration'
+      this.view = 'registration';
     } else {
-      this.view = 'login'
+      this.view = 'login';
     }
+  }
+
+  registration(dto: UserRegistrationDto) {
+    this.user.registration(dto).subscribe(() => {
+      this.goToHome();
+    });
+  }
+
+  private goToHome() {
+    return this.router.navigate([Routers.home]);
   }
 }
