@@ -27,7 +27,8 @@
     <mat-form-field>
         <mat-label>Confirm password</mat-label>
         <input type="password" matInput placeholder="****" formControlName="passwordConfirm">
-        <mat-error>Required field</mat-error>
+        <mat-error *ngIf="form.controls['passwordConfirm'].hasError('required')">Required field</mat-error>
+        <mat-error *ngIf="form.controls['passwordConfirm'].hasError('noEqual')">Пароли не совпадают</mat-error>
     </mat-form-field>
 
     <button mat-flat-button color="primary">Submit</button>
