@@ -1,7 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { filter, takeUntil, tap } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+import { UserRegistrationDto } from '@models/user.interface';
 
 @Component({
   selector: 'app-registration',
@@ -11,18 +12,22 @@ import { Observable, Subject } from 'rxjs';
 })
 export class RegistrationComponent implements OnInit, OnDestroy {
 
-  form: FormGroup;
+  public form: FormGroup;
 
   private unsubscribe$ = new Subject();
 
   constructor(
     private fb: FormBuilder
   ) {
-    this.form = fb.group({
+    this.form = this.initForm();
+  }
+
+  initForm(): FormGroup {
+    return this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       phone: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       passwordConfirm: ['', Validators.required],
     });
@@ -32,9 +37,26 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.comparePasswords();
   }
 
-  comparePasswords(): void {
+  onSubmit() {
+    if (!this.form.valid) {
+      return;
+    }
+
+    const dto: UserRegistrationDto = {
+      email: this.form.get('email')?.value,
+      firstName: this.form.get('firstName')?.value,
+      lastName: this.form.get('lastName')?.value,
+      password: this.form.get('password')?.value,
+      phone: this.form.get('phone')?.value
+    };
+
+    console.log(dto);
+  }
+
+  private comparePasswords(): void {
     const password = this.form.get('password');
     const confirm = this.form.get('passwordConfirm');
+
     if (confirm && password) {
       confirm.valueChanges.pipe(
         filter(() => !!password.value),
@@ -48,11 +70,11 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe$)
       ).subscribe();
 
-      function validate() {
+      function validate(): void {
         const isEqual = password?.value === confirm?.value;
         if (!isEqual) {
           confirm?.setErrors({noEqual: true});
-          confirm?.markAsTouched()
+          confirm?.markAsTouched();
         }
       }
     }

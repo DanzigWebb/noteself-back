@@ -12,3 +12,11 @@ export interface UserLoginDto {
   name: string;
   password: string;
 }
+
+export interface UserRegistrationDto {
+  firstName: string;
+  lastName: string;
+  password: string;
+  email: string;
+  phone: string;
+}
