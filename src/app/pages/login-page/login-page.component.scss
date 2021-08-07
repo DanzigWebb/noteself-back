@@ -1,7 +1,10 @@
+@import "src/styles/vars";
 
 .login {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 100%;
+    @include flex(column, center, center);
+
+    &-btn{
+        margin-top: $gutter / 2;
+    }
 }

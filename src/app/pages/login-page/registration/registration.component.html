@@ -1,0 +1,34 @@
+<form class="login-form" [formGroup]="form">
+    <mat-form-field>
+        <mat-label>First name</mat-label>
+        <input type="text" matInput placeholder="Ivan" formControlName="firstName" autocomplete="off">
+        <mat-error>Required field</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Last name</mat-label>
+        <input type="text" matInput placeholder="Ivanov" formControlName="lastName" autocomplete="off">
+        <mat-error>Required field</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Phone</mat-label>
+        <input type="tel" matInput placeholder="+79618658766" formControlName="phone">
+        <mat-error>Required field</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" matInput placeholder="IvanIvanov@gmail.com" formControlName="email">
+        <mat-error>Required field</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" matInput placeholder="****" formControlName="password">
+        <mat-error>Required field</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Confirm password</mat-label>
+        <input type="password" matInput placeholder="****" formControlName="passwordConfirm">
+        <mat-error>Required field</mat-error>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary">Submit</button>
+</form>
