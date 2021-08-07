@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { UserRegistrationDto } from '@models/user.interface';
+import { UserLoginDto, UserRegistrationDto } from '@models/user.interface';
 import { UserFacade } from '@state/user/user.facade';
 import { Router } from '@angular/router';
 import { Routers } from '@core/enums/routers.enum';
+import { catchError } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
 
 type FormView = 'login' | 'registration';
 
@@ -39,7 +42,18 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  private goToHome() {
+  login(dto: UserLoginDto) {
+    this.user.login(dto).pipe(
+      catchError((err: HttpErrorResponse) => {
+        alert(err.message);
+        return throwError(err);
+      }),
+    ).subscribe(() => {
+      this.goToHome();
+    });
+  }
+
+  private goToHome(): Promise<boolean> {
     return this.router.navigate([Routers.home]);
   }
 }

@@ -1,12 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { UserFacade } from "@state/user/user.facade";
-import { Router } from "@angular/router";
-import { catchError } from "rxjs/operators";
-import { HttpErrorResponse } from "@angular/common/http";
-import { throwError } from "rxjs";
-import { UserLoginDto } from "@models/user.interface";
-import { Routers } from "@core/enums/routers.enum";
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserLoginDto } from '@models/user.interface';
 
 enum LoginValidatorsEnum {
   name = 'invalidLogin'
@@ -20,6 +14,8 @@ enum LoginValidatorsEnum {
 })
 export class LoginComponent implements OnInit {
 
+  @Output() onSubmit = new EventEmitter<UserLoginDto>();
+
   form!: FormGroup;
 
   get nameInput() {
@@ -31,9 +27,7 @@ export class LoginComponent implements OnInit {
   }
 
   constructor(
-    private fb: FormBuilder,
-    private user: UserFacade,
-    private router: Router,
+    private fb: FormBuilder
   ) {
   }
 
@@ -48,16 +42,13 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login(): void {
+  submit(): void {
+    if (!this.form.valid) {
+      return;
+    }
+
     const dto = this.createLoginDto();
-    this.user.login(dto).pipe(
-      catchError((err: HttpErrorResponse) => {
-        alert(err.message);
-        return throwError(err);
-      }),
-    ).subscribe(() => {
-      this.goToHome();
-    });
+    this.onSubmit.emit(dto);
   }
 
   private createLoginDto(): UserLoginDto {
@@ -65,9 +56,5 @@ export class LoginComponent implements OnInit {
     const password = this.form.value.password;
 
     return {name, password};
-  }
-
-  private goToHome() {
-    return this.router.navigate([Routers.home]);
   }
 }
