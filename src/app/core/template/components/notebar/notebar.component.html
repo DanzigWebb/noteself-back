@@ -1,13 +1,19 @@
 <div class="notebar">
     <app-drag-column *ngIf="noteState">
         <mat-nav-list class="notebar-list">
-            <mat-list-item *ngFor="let note of noteState.notes" class="note" (click)="onCheckNote(note)">
-                <mat-icon class="note-icon" color="accent">splitscreen</mat-icon>
-                <div class="note-info">
-                    <span class="note-title">{{note.title}}</span>
-                    <span class="note-date">{{note.updatedAt | date}}</span>
-                </div>
-            </mat-list-item>
+
+            <ng-container *ngFor="let note of noteState.notes">
+                <mat-list-item class="note" (click)="onCheckNote(note)">
+                    <mat-icon class="note-icon" color="accent">splitscreen</mat-icon>
+                    <div class="note-info">
+                        <span class="note-title">{{note.title}}</span>
+                        <span class="note-date">{{note.updatedAt | date}}</span>
+                    </div>
+                </mat-list-item>
+
+                <mat-divider></mat-divider>
+            </ng-container>
+
         </mat-nav-list>
     </app-drag-column>
 </div>

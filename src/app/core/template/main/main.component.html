@@ -1,5 +1,8 @@
 <div class="page">
-    <app-header [userState]="userState$ | async"></app-header>
+    <app-header
+        [userState]="userState$ | async"
+        (logout)="logout()">
+    </app-header>
 
     <main class="main">
         <app-navbar

@@ -10,6 +10,7 @@ import { RouterModule } from "@angular/router";
 import { MatListModule } from "@angular/material/list";
 import { DragColumnModule } from "@components/drag-column/drag-column.module";
 import { NotebarComponent } from './components/notebar/notebar.component';
+import { MatMenuModule } from "@angular/material/menu";
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { NotebarComponent } from './components/notebar/notebar.component';
     RouterModule,
     MatListModule,
     DragColumnModule,
+    MatMenuModule,
   ],
   exports: [
     MainComponent,

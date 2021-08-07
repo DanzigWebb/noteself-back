@@ -2,6 +2,7 @@
 
 .editor {
 	padding: $gutter;
+	user-select: none;
 	
 	&-title {
 		font-size: 24px;

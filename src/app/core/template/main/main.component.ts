@@ -3,6 +3,7 @@ import { UserFacade } from "@state/user/user.facade";
 import { SubjectFacade } from "@state/subject/subject.facade";
 import { NoteFacade } from "@state/note/note.facade";
 import { Router } from "@angular/router";
+import { Routers } from "@core/enums/routers.enum";
 
 @Component({
   selector: 'app-main',
@@ -12,15 +13,15 @@ import { Router } from "@angular/router";
 })
 export class MainComponent implements OnInit {
 
-  userState$ = this.userFacade.state$;
-  subjectState$ = this.subjectFacade.state$;
-  noteState$ = this.noteFacade.state$;
+  public userState$ = this.userFacade.state$;
+  public subjectState$ = this.subjectFacade.state$;
+  public noteState$ = this.noteFacade.state$;
 
   constructor(
     private userFacade: UserFacade,
     private subjectFacade: SubjectFacade,
     private noteFacade: NoteFacade,
-    private router: Router
+    private router: Router,
   ) {
   }
 
@@ -30,6 +31,12 @@ export class MainComponent implements OnInit {
   }
 
   editNote(id: number) {
-    this.router.navigate([id])
+    this.router.navigate(['edit', id]);
+  }
+
+  logout() {
+    this.userFacade.logout().subscribe(() => {
+      this.router.navigate([Routers.login]);
+    });
   }
 }
