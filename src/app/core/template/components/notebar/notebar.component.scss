@@ -1,0 +1,47 @@
+@import "src/styles/vars";
+
+.notebar {
+	user-select: none;
+	height: 100%;
+	
+	&-list {
+		//min-width: 200px;
+	}
+}
+
+.note {
+	&-icon {
+		font-size: 14px;
+		@include flex(row, center, center);
+		user-select: none;
+		flex-basis: 0;
+	}
+	
+	&-info {
+		@include flex(column);
+		padding-left: $gutter / 2;
+		
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	
+	&-title {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		
+		font-size: 14px;
+		font-weight: bold;
+	}
+	
+	&-date {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		
+		font-size: 12px;
+		opacity: .8;
+		font-weight: lighter;
+	}
+}

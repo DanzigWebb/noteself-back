@@ -1,0 +1,7 @@
+<div class="column" #column>
+    <div class="column-inner">
+        <ng-content></ng-content>
+    </div>
+
+    <div class="column-border" (mousedown)="onMouseDown($event)"></div>
+</div>
