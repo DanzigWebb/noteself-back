@@ -1,7 +1,7 @@
 <div class="notebar">
     <app-drag-column *ngIf="noteState">
         <mat-nav-list class="notebar-list">
-            <mat-list-item *ngFor="let note of noteState.notes" class="note">
+            <mat-list-item *ngFor="let note of noteState.notes" class="note" (click)="onCheckNote(note)">
                 <mat-icon class="note-icon" color="accent">splitscreen</mat-icon>
                 <div class="note-info">
                     <span class="note-title">{{note.title}}</span>
