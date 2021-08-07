@@ -17,9 +17,31 @@
 		flex-basis: 0;
 	}
 	
+	&-info {
+		@include flex(column);
+		padding-left: $gutter / 2;
+		
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	
 	&-title {
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
+		
+		font-size: 14px;
+		font-weight: bold;
+	}
+	
+	&-date {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		
+		font-size: 12px;
+		opacity: .8;
+		font-weight: lighter;
 	}
 }
