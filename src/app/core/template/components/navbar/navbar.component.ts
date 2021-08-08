@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit {
 
   onDrag(e: number) {
     if (e === DragLimits.min) {
-      this.ui.sidebar.hide();
+      this.ui.navbar.hide();
     }
   }
 }

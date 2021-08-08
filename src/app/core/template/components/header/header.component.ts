@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   }
 
   toggleSidebar() {
-    this.ui.sidebar.toggle();
+    this.ui.navbar.toggle();
   }
 
   onLogout(): void {

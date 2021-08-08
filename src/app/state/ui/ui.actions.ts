@@ -1,14 +1,14 @@
 export namespace UiActions {
-  export class ShowSidebar {
-    static readonly type = '[Ui.Sidebar] Show Sidebar';
+  export class ShowNavbar {
+    static readonly type = '[Ui.Navbar] Show Navbar';
   }
 
-  export class HideSidebar {
-    static readonly type = '[Ui.Sidebar] Hide Sidebar';
+  export class HideNavbar {
+    static readonly type = '[Ui.Navbar] Hide Navbar';
   }
 
-  export class ToggleSidebar {
-    static readonly type = '[Ui.Sidebar] Toggle Sidebar';
+  export class ToggleNavbar {
+    static readonly type = '[Ui.Navbar] Toggle Navbar';
   }
 }
 

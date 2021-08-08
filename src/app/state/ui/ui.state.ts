@@ -4,15 +4,15 @@ import { UiActions } from "@state/ui/ui.actions";
 import { UI_STORAGE, UiStorage } from "@shared/storages/ui.storage";
 
 export interface UiStateModel {
-  sidebar: SidebarStateModel;
+  navbar: NavbarStateModel;
 }
 
-export interface SidebarStateModel {
+export interface NavbarStateModel {
   isOpen: boolean;
 }
 
 const defaults: UiStateModel = {
-  sidebar: {
+  navbar: {
     isOpen: true,
   },
 };
@@ -29,46 +29,46 @@ export class UiState {
   }
 
   @Selector()
-  static sidebar(s: UiStateModel): SidebarStateModel {
-    return s.sidebar;
+  static navbar(s: UiStateModel): NavbarStateModel {
+    return s.navbar;
   }
 
   constructor(
-    @Inject(UI_STORAGE) private storage: UiStorage
+    @Inject(UI_STORAGE) private storage: UiStorage,
   ) {
   }
 
-  @Action(UiActions.HideSidebar)
-  hideSidebar({getState, setState}: StateContext<UiStateModel>) {
+  @Action(UiActions.HideNavbar)
+  hideNavbar({getState, setState}: StateContext<UiStateModel>) {
     const state = getState();
     setState({
       ...state,
-      sidebar: {isOpen: false},
+      navbar: {isOpen: false},
     });
 
-    this.storage.updateSidebarState(state.sidebar);
+    this.storage.updateNavbarState(getState().navbar);
   }
 
-  @Action(UiActions.ShowSidebar)
-  showSidebar({getState, setState}: StateContext<UiStateModel>) {
+  @Action(UiActions.ShowNavbar)
+  showNavbar({getState, setState}: StateContext<UiStateModel>) {
     const state = getState();
     setState({
       ...state,
-      sidebar: {isOpen: true},
+      navbar: {isOpen: true},
     });
 
-    this.storage.updateSidebarState(state.sidebar);
+    this.storage.updateNavbarState(getState().navbar);
   }
 
-  @Action(UiActions.ToggleSidebar)
-  toggleSidebar({getState, setState}: StateContext<UiStateModel>) {
+  @Action(UiActions.ToggleNavbar)
+  toggleNavbar({getState, setState}: StateContext<UiStateModel>) {
     const state = getState();
-    const isOpen = !state.sidebar.isOpen;
+    const isOpen = !state.navbar.isOpen;
     setState({
       ...state,
-      sidebar: {isOpen},
+      navbar: {isOpen},
     });
 
-    this.storage.updateSidebarState(state.sidebar);
+    this.storage.updateNavbarState(getState().navbar);
   }
 }
