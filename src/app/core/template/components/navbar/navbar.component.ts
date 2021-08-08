@@ -3,6 +3,11 @@ import { SubjectStateModel } from "@state/subject/subject.state";
 import { UiFacade } from "@state/ui/ui.facade";
 import { map } from "rxjs/operators";
 
+enum DragLimits {
+  min = 80,
+  max = 500,
+}
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -12,6 +17,11 @@ import { map } from "rxjs/operators";
 export class NavbarComponent implements OnInit {
 
   @Input() subjectState: SubjectStateModel | null = null;
+
+  dragLimits = {
+    min: DragLimits.min,
+    max: DragLimits.max,
+  };
 
   isOpen$ = this.ui.sidebar$.pipe(
     map((s) => s.isOpen),
@@ -23,5 +33,11 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  onDrag(e: number) {
+    if (e === DragLimits.min) {
+      this.ui.sidebar.hide();
+    }
   }
 }

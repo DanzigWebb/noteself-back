@@ -1,5 +1,9 @@
 <div class="navbar" *ngIf="isOpen$ | async">
-    <app-drag-column>
+    <app-drag-column
+        (onDrag)="onDrag($event)"
+        [maxWidth]="dragLimits.max"
+        [minWidth]="dragLimits.min"
+    >
         <div class="navbar-inner">
             <mat-nav-list class="subjects" *ngIf="subjectState">
                 <mat-list-item class="subject">

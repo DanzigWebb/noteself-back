@@ -11,6 +11,7 @@ import { MatListModule } from "@angular/material/list";
 import { DragColumnModule } from "@components/drag-column/drag-column.module";
 import { NotebarComponent } from './components/notebar/notebar.component';
 import { MatMenuModule } from "@angular/material/menu";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { MatMenuModule } from "@angular/material/menu";
     MatListModule,
     DragColumnModule,
     MatMenuModule,
+    MatTooltipModule,
   ],
   exports: [
     MainComponent,
