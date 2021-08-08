@@ -17,7 +17,7 @@
                     </div>
                 </mat-list-item>
 
-                <mat-menu #menu="matMenu" xPosition="before">
+                <mat-menu #menu="matMenu" xPosition="after">
                     <app-navbar-new-subject
                         [menu]="menuTrigger"
                         (keydown)="$event.stopPropagation()"
