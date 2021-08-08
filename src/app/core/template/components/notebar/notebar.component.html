@@ -2,7 +2,21 @@
     <app-drag-column *ngIf="noteState">
         <mat-nav-list class="notebar-list">
 
-            <ng-container *ngFor="let note of noteState.notes">
+            <mat-list-item class="note">
+                <mat-icon class="note-icon" color="accent">add_circle</mat-icon>
+                <div class="note-info">
+                    <span class="note-title">Create new</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider></mat-divider>
+
+            <mat-list-item>
+                <h2 class="note-title">{{noteState.checkedSubject?.title || 'All Subjects'}}</h2>
+            </mat-list-item>
+            
+
+            <ng-container *ngFor="let note of noteState.checkedNotes">
                 <mat-list-item class="note" (click)="onCheckNote(note)">
                     <mat-icon class="note-icon" color="accent">splitscreen</mat-icon>
                     <div class="note-info">

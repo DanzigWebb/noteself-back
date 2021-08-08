@@ -21,6 +21,11 @@
 .subject {
 	@include flex(row);
 	
+	&.checked {
+		transition: .4s ease background-color;
+		background-color: #212121;
+	}
+	
 	&-title {
 		font-size: 14px;
 		font-weight: bold;

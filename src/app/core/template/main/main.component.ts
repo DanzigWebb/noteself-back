@@ -4,7 +4,8 @@ import { SubjectFacade } from "@state/subject/subject.facade";
 import { NoteFacade } from "@state/note/note.facade";
 import { Router } from "@angular/router";
 import { Routers } from "@core/enums/routers.enum";
-import { NoteSubjectCreateDto } from "@models/subject.interface";
+import { NoteSubject, NoteSubjectCreateDto } from "@models/subject.interface";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-main',
@@ -17,6 +18,10 @@ export class MainComponent implements OnInit {
   public userState$ = this.userFacade.state$;
   public subjectState$ = this.subjectFacade.state$;
   public noteState$ = this.noteFacade.state$;
+
+  public checkedSubject$ = this.noteState$.pipe(
+    map((s) => s.checkedSubject),
+  );
 
   constructor(
     private userFacade: UserFacade,
@@ -43,5 +48,9 @@ export class MainComponent implements OnInit {
 
   createSubject(dto: NoteSubjectCreateDto) {
     this.subjectFacade.create(dto);
+  }
+
+  checkSubject(item: NoteSubject | null) {
+    this.noteFacade.checkBySubject(item);
   }
 }

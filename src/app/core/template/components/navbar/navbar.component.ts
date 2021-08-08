@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { SubjectStateModel } from "@state/subject/subject.state";
 import { UiFacade } from "@state/ui/ui.facade";
 import { map } from "rxjs/operators";
-import { NoteSubjectCreateDto } from "@models/subject.interface";
+import { NoteSubject, NoteSubjectCreateDto } from "@models/subject.interface";
 
 enum DragLimits {
   min = 80,
@@ -18,8 +18,10 @@ enum DragLimits {
 export class NavbarComponent implements OnInit {
 
   @Input() subjectState: SubjectStateModel | null = null;
+  @Input() checkedSubject: NoteSubject | null = null;
 
   @Output() onCreateSubject = new EventEmitter<NoteSubjectCreateDto>();
+  @Output() onCheckSubject = new EventEmitter<NoteSubject | null>();
 
   dragLimits = {
     min: DragLimits.min,
@@ -46,5 +48,9 @@ export class NavbarComponent implements OnInit {
 
   createSubject(dto: NoteSubjectCreateDto): void {
     this.onCreateSubject.emit(dto);
+  }
+
+  checkSubject(item: NoteSubject | null) {
+    this.onCheckSubject.emit(item);
   }
 }

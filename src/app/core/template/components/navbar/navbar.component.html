@@ -28,17 +28,15 @@
 
                 <mat-divider></mat-divider>
 
-                <mat-list-item class="subject">
+                <mat-list-item class="subject" (click)="checkSubject(null)" [class.checked]="checkedSubject === null">
                     <mat-icon class="subject-icon" color="primary">folder_open</mat-icon>
                     <div class="subject-info">
                         <span class="subject-title">All Subjects</span>
                     </div>
                 </mat-list-item>
 
-                <mat-divider></mat-divider>
-
                 <ng-container *ngFor="let subject of subjectState.subjects">
-                    <mat-list-item class="subject">
+                    <mat-list-item class="subject" (click)="checkSubject(subject)" [class.checked]="checkedSubject?.id === subject.id">
                         <mat-icon class="subject-icon" color="primary">folder_open</mat-icon>
                         <div class="subject-info">
                             <span class="subject-title">{{subject.title}}</span>

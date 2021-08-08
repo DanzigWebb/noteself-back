@@ -46,14 +46,9 @@ export class SubjectState {
   }
 
   @Action(SubjectActions.Create)
-  create({getState, setState}: StateContext<SubjectStateModel>, {payload}: SubjectActions.Create) {
+  create({dispatch}: StateContext<SubjectStateModel>, {payload}: SubjectActions.Create) {
     return this.api.createSubject(payload).pipe(
-      switchMap(() => this.api.getSubjects().pipe(
-        tap((dto) => {
-          const subjects: NoteSubject[] = this.parseSubjects(dto);
-          setState({subjects});
-        }),
-      )),
+      switchMap(() => dispatch(new SubjectActions.GetAll())),
     );
   }
 

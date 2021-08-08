@@ -7,7 +7,9 @@
     <main class="main">
         <app-navbar
             [subjectState]="subjectState$ | async"
-            (onCreateSubject)="createSubject($event)">
+            [checkedSubject]="checkedSubject$ | async"
+            (onCreateSubject)="createSubject($event)"
+            (onCheckSubject)="checkSubject($event)">
         </app-navbar>
 
         <app-notebar
