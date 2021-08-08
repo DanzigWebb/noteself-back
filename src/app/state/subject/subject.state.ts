@@ -1,4 +1,4 @@
-import { NoteSubject } from "@models/subject.interface";
+import { NoteSubject, NoteSubjectDto } from "@models/subject.interface";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { ApiService } from "@services/api.service";
 import { switchMap, tap } from "rxjs/operators";
@@ -39,7 +39,7 @@ export class SubjectState {
   getAll({setState}: StateContext<SubjectStateModel>) {
     return this.api.getSubjects().pipe(
       tap((dto) => {
-        const subjects: NoteSubject[] = dto.map(d => new NoteSubject(d));
+        const subjects: NoteSubject[] = this.parseSubjects(dto);
         setState({subjects});
       }),
     );
@@ -50,10 +50,15 @@ export class SubjectState {
     return this.api.createSubject(payload).pipe(
       switchMap(() => this.api.getSubjects().pipe(
         tap((dto) => {
-          const subjects: NoteSubject[] = dto.map(d => new NoteSubject(d));
+          const subjects: NoteSubject[] = this.parseSubjects(dto);
           setState({subjects});
         }),
       )),
     );
+  }
+
+  parseSubjects(dto: NoteSubjectDto[]): NoteSubject[] {
+    return dto.map(d => new NoteSubject(d))
+      .sort((a, b) => (+b.createdAt) - (+a.createdAt));
   }
 }
