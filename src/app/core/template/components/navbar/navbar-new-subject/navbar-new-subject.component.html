@@ -1,0 +1,14 @@
+<div class="form" (keydown.enter)="submit()">
+    <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input type="text" matInput placeholder="Work" #titleInput [formControl]="title" autocomplete="off">
+        <mat-error>Required field</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input type="text" matInput placeholder="For the project X" [formControl]="description" autocomplete="off">
+        <mat-error>Required field</mat-error>
+    </mat-form-field>
+    <button mat-flat-button type="button" color="primary" (click)="submit()">Submit</button>
+</div>

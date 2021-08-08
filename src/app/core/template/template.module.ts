@@ -12,6 +12,10 @@ import { DragColumnModule } from "@components/drag-column/drag-column.module";
 import { NotebarComponent } from './components/notebar/notebar.component';
 import { MatMenuModule } from "@angular/material/menu";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { NavbarNewSubjectComponent } from './components/navbar/navbar-new-subject/navbar-new-subject.component';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -20,6 +24,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     HeaderComponent,
     NavbarComponent,
     NotebarComponent,
+    NavbarNewSubjectComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +36,10 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     DragColumnModule,
     MatMenuModule,
     MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   exports: [
     MainComponent,
