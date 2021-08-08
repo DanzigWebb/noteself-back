@@ -4,6 +4,7 @@ import { SubjectFacade } from "@state/subject/subject.facade";
 import { NoteFacade } from "@state/note/note.facade";
 import { Router } from "@angular/router";
 import { Routers } from "@core/enums/routers.enum";
+import { NoteSubjectCreateDto } from "@models/subject.interface";
 
 @Component({
   selector: 'app-main',
@@ -38,5 +39,9 @@ export class MainComponent implements OnInit {
     this.userFacade.logout().subscribe(() => {
       this.router.navigate([Routers.login]);
     });
+  }
+
+  createSubject(dto: NoteSubjectCreateDto) {
+    this.subjectFacade.create(dto);
   }
 }

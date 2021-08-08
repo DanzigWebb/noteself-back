@@ -1,7 +1,7 @@
 import { NoteSubject } from "@models/subject.interface";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { ApiService } from "@services/api.service";
-import { tap } from "rxjs/operators";
+import { switchMap, tap } from "rxjs/operators";
 import { SubjectActions } from "@state/subject/subject.actions";
 import { Injectable } from "@angular/core";
 
@@ -42,6 +42,18 @@ export class SubjectState {
         const subjects: NoteSubject[] = dto.map(d => new NoteSubject(d));
         setState({subjects});
       }),
+    );
+  }
+
+  @Action(SubjectActions.Create)
+  create({getState, setState}: StateContext<SubjectStateModel>, {payload}: SubjectActions.Create) {
+    return this.api.createSubject(payload).pipe(
+      switchMap(() => this.api.getSubjects().pipe(
+        tap((dto) => {
+          const subjects: NoteSubject[] = dto.map(d => new NoteSubject(d));
+          setState({subjects});
+        }),
+      )),
     );
   }
 }

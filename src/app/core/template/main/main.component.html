@@ -6,7 +6,8 @@
 
     <main class="main">
         <app-navbar
-            [subjectState]="subjectState$ | async">
+            [subjectState]="subjectState$ | async"
+            (onCreateSubject)="createSubject($event)">
         </app-navbar>
 
         <app-notebar

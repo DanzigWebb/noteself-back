@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SubjectStateModel } from "@state/subject/subject.state";
 import { UiFacade } from "@state/ui/ui.facade";
 import { map } from "rxjs/operators";
+import { NoteSubjectCreateDto } from "@models/subject.interface";
 
 enum DragLimits {
   min = 80,
@@ -17,6 +18,8 @@ enum DragLimits {
 export class NavbarComponent implements OnInit {
 
   @Input() subjectState: SubjectStateModel | null = null;
+
+  @Output() onCreateSubject = new EventEmitter<NoteSubjectCreateDto>();
 
   dragLimits = {
     min: DragLimits.min,
@@ -39,5 +42,9 @@ export class NavbarComponent implements OnInit {
     if (e === DragLimits.min) {
       this.ui.navbar.hide();
     }
+  }
+
+  createSubject(dto: NoteSubjectCreateDto): void {
+    this.onCreateSubject.emit(dto);
   }
 }

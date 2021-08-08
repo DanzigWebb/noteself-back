@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { APP_CONFIG, AppConfig } from "@core/config";
 import { UserDto, UserLoginDto } from "@models/user.interface";
 import { Observable } from "rxjs";
-import { NoteSubjectDto } from "@models/subject.interface";
+import { NoteSubjectCreateDto, NoteSubjectDto } from "@models/subject.interface";
 import { NoteDto } from "@models/note.interface";
 import { USER_STORAGE, UserStorage } from "@shared/storages/user.storage";
 
@@ -32,13 +32,18 @@ export class ApiService {
     return this.http.get<NoteSubjectDto[]>(`${this.url}subject`, {headers});
   }
 
+  createSubject(dto: NoteSubjectCreateDto): Observable<NoteSubjectDto> {
+    const headers = this.createHeader();
+    return this.http.post<NoteSubjectDto>(`${this.url}subject`, {...dto}, {headers});
+  }
+
   getNotes(): Observable<NoteDto[]> {
     const headers = this.createHeader();
     return this.http.get<NoteDto[]>(`${this.url}note`, {headers});
   }
 
   // Todo: перенести в AuthInterceptors
-  createHeader(): HttpHeaders {
+  private createHeader(): HttpHeaders {
     const token = this.userStorage.getItem('accessToken');
 
     return new HttpHeaders()

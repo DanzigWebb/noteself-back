@@ -6,20 +6,47 @@
     >
         <div class="navbar-inner">
             <mat-nav-list class="subjects" *ngIf="subjectState">
+                <mat-list-item
+                    class="subject"
+                    #menuTrigger="matMenuTrigger"
+                    [matMenuTriggerFor]="menu"
+                >
+                    <mat-icon class="subject-icon" color="accent">add_circle</mat-icon>
+                    <div class="subject-info">
+                        <span class="subject-title">New Subject</span>
+                    </div>
+                </mat-list-item>
+
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <app-navbar-new-subject
+                        [menu]="menuTrigger"
+                        (keydown)="$event.stopPropagation()"
+                        (click)="$event.stopPropagation()"
+                        (onSubmit)="createSubject($event)">
+                    </app-navbar-new-subject>
+                </mat-menu>
+
+                <mat-divider></mat-divider>
+
                 <mat-list-item class="subject">
                     <mat-icon class="subject-icon" color="primary">folder_open</mat-icon>
-                    <span class="subject-title">All Subjects</span>
+                    <div class="subject-info">
+                        <span class="subject-title">All Subjects</span>
+                    </div>
                 </mat-list-item>
 
                 <mat-divider></mat-divider>
 
-                <mat-list-item
-                    *ngFor="let subject of subjectState.subjects"
-                    class="subject"
-                >
-                    <mat-icon class="subject-icon" color="primary">folder_open</mat-icon>
-                    <span class="subject-title">{{subject.title}}</span>
-                </mat-list-item>
+                <ng-container *ngFor="let subject of subjectState.subjects">
+                    <mat-list-item class="subject">
+                        <mat-icon class="subject-icon" color="primary">folder_open</mat-icon>
+                        <div class="subject-info">
+                            <span class="subject-title">{{subject.title}}</span>
+                            <span class="subject-description">{{subject.description}}</span>
+                        </div>
+                    </mat-list-item>
+                </ng-container>
+
             </mat-nav-list>
         </div>
     </app-drag-column>

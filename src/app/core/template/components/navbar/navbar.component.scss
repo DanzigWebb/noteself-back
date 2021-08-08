@@ -22,18 +22,32 @@
 	@include flex(row);
 	
 	&-title {
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		
 		font-size: 14px;
 		font-weight: bold;
-		padding-left: $gutter / 2;
 	}
 	
 	&-icon {
 		font-size: 16px;
 		@include flex(row, center, center);
 		flex-basis: 0;
+	}
+	
+	&-info {
+		@include flex(column);
+		padding-left: $gutter / 2;
+	}
+	
+	&-description {
+		font-size: 14px;
+		font-weight: lighter;
+		opacity: .7;
+	}
+	
+	&-info,
+	&-title,
+	&-description {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 }
