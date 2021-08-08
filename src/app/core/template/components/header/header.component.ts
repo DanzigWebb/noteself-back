@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 import { UserStateModel } from "@state/user/user.state";
 import { UserDto } from "@models/user.interface";
+import { UiFacade } from "@state/ui/ui.facade";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-header',
@@ -23,6 +25,14 @@ export class HeaderComponent implements OnInit, OnChanges {
   @Output() logout = new EventEmitter();
 
   public user: UserDto | undefined;
+  public isOpenSidebar$ = this.ui.sidebar$.pipe(
+    map((s) => s.isOpen),
+  );
+
+  constructor(
+    private ui: UiFacade,
+  ) {
+  }
 
   ngOnInit(): void {
   }
@@ -31,6 +41,10 @@ export class HeaderComponent implements OnInit, OnChanges {
     if (changes.userState) {
       this.user = this.userState?.user;
     }
+  }
+
+  toggleSidebar() {
+    this.ui.sidebar.toggle();
   }
 
   onLogout(): void {

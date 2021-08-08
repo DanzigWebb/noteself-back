@@ -26,20 +26,19 @@
 		overflow: hidden;
 	}
 	
-	&-title {
+	&-title,
+	&-date {
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
-		
+	}
+	
+	&-title {
 		font-size: 14px;
 		font-weight: bold;
 	}
 	
 	&-date {
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		
 		font-size: 12px;
 		opacity: .8;
 		font-weight: lighter;

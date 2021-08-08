@@ -1,21 +1,24 @@
-<app-drag-column>
-    <div class="navbar">
-        Navbar
+<div class="navbar" *ngIf="isOpen$ | async">
+    <app-drag-column>
+        <div class="navbar-inner">
+            <mat-nav-list class="subjects" *ngIf="subjectState">
+                <mat-list-item class="subject">
+                    <mat-icon class="subject-icon" color="primary">folder_open</mat-icon>
+                    <span class="subject-title">All Subjects</span>
+                </mat-list-item>
 
-        <mat-nav-list class="subjects" *ngIf="subjectState">
-            <mat-list-item class="subjects-item">
-                <mat-icon class="subjects-icon" color="primary">folder_open</mat-icon>
-                <span>All Subjects</span>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item
-                *ngFor="let subject of subjectState.subjects"
-                class="subjects-item"
-            >
-                <mat-icon class="subjects-icon" color="primary">folder_open</mat-icon>
-                <span>{{subject.title}}</span>
-            </mat-list-item>
-        </mat-nav-list>
-    </div>
-</app-drag-column>
+                <mat-divider></mat-divider>
+
+                <mat-list-item
+                    *ngFor="let subject of subjectState.subjects"
+                    class="subject"
+                >
+                    <mat-icon class="subject-icon" color="primary">folder_open</mat-icon>
+                    <span class="subject-title">{{subject.title}}</span>
+                </mat-list-item>
+            </mat-nav-list>
+        </div>
+    </app-drag-column>
+</div>
+
 

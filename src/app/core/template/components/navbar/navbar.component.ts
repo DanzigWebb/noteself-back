@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { SubjectStateModel } from "@state/subject/subject.state";
+import { UiFacade } from "@state/ui/ui.facade";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +13,13 @@ export class NavbarComponent implements OnInit {
 
   @Input() subjectState: SubjectStateModel | null = null;
 
-  constructor() {
+  isOpen$ = this.ui.sidebar$.pipe(
+    map((s) => s.isOpen),
+  );
+
+  constructor(
+    private ui: UiFacade,
+  ) {
   }
 
   ngOnInit(): void {
