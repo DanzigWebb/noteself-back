@@ -4,8 +4,16 @@
         <button
             mat-icon-button
             (click)="toggleSidebar()">
-            <mat-icon class="header-sidebar-icon" color="primary" [class.rotate]="!(isOpenSidebar$ | async)">arrow_back_ios_new</mat-icon>
+            <mat-icon
+                class="header-sidebar-icon"
+                color="primary"
+                [class.rotate]="!(isOpenSidebar$ | async)"
+                matTooltip="Toggle Sidebar"
+            >
+                arrow_back_ios_new
+            </mat-icon>
         </button>
+
         <div class="header-spacer"></div>
         <div class="header-user" *ngIf="userState">
             <button mat-icon-button *ngIf="!userState.isLogin">
