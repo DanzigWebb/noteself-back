@@ -2,46 +2,31 @@
     <app-drag-column *ngIf="noteState">
         <mat-nav-list class="notebar-list">
 
-            <mat-list-item class="note" (click)="create()">
-                <mat-icon class="note-icon" color="accent">add_circle</mat-icon>
-                <div class="note-info">
-                    <span class="note-title">Create new</span>
-                </div>
-            </mat-list-item>
+            <app-list-item
+                title="Create new"
+                icon="add_circle"
+                (click)="create()">
+            </app-list-item>
 
             <mat-divider></mat-divider>
 
             <mat-list-item>
-                <h2 class="note-title">{{noteState.checkedSubject?.title || 'All Subjects'}}</h2>
+                <h2 class="notebar-title">{{noteState.checkedSubject?.title || 'All Subjects'}}</h2>
             </mat-list-item>
 
 
             <ng-container *ngFor="let note of noteState.checkedNotes">
-                <mat-list-item class="note" (click)="checkNote(note)">
-                    <mat-icon class="note-icon" color="accent">splitscreen</mat-icon>
-                    <div class="note-info">
-                        <span class="note-title" [innerHTML]="note.title"></span>
-                        <span class="note-date">{{note.updatedAt | date}}</span>
-                    </div>
+                <app-list-item
+                    [title]="note.title"
+                    [description]="note.description"
+                    [updatedAt]="note.updatedAt"
+                    [isActive]="noteState.editNote?.id === note.id"
+                    [withMenu]="true"
+                    icon="splitscreen"
 
-                    <button
-                        mat-icon-button
-                        class="note-menu-trigger"
-                        (click)="$event.stopPropagation()"
-                        [matMenuTriggerFor]="subjectMenu"
-                    >
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                </mat-list-item>
-
-                <mat-menu #subjectMenu="matMenu" xPosition="after" class="note-menu">
-                    <button mat-button class="note-menu-btn" (click)="delete(note)">
-                        <span class="note-menu-btn__inner">
-                            <mat-icon class="note-menu-btn__icon" color="accent">delete</mat-icon>
-                            <span class="note-menu-btn__text">Delete</span>
-                        </span>
-                    </button>
-                </mat-menu>
+                    (click)="checkNote(note)"
+                    (onDelete)="delete(note)">
+                </app-list-item>
 
                 <mat-divider></mat-divider>
             </ng-container>

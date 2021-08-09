@@ -1,0 +1,26 @@
+<mat-list-item class="item" [class.is-active]="isActive">
+    <mat-icon class="item-icon" color="accent">{{icon}}</mat-icon>
+    <div class="item-info">
+        <span class="item-title" *ngIf="title" [innerHTML]="title"></span>
+        <span class="item-date" *ngIf="updatedAt">{{updatedAt | date}}</span>
+    </div>
+
+    <button
+        *ngIf="withMenu"
+        mat-icon-button
+        class="item-menu-trigger"
+        (click)="$event.stopPropagation()"
+        [matMenuTriggerFor]="subjectMenu"
+    >
+        <mat-icon>more_vert</mat-icon>
+    </button>
+</mat-list-item>
+
+<mat-menu #subjectMenu="matMenu" xPosition="after" class="item-menu">
+    <button mat-button class="item-menu-btn" (click)="delete()">
+        <span class="item-menu-btn__inner">
+            <mat-icon class="item-menu-btn__icon" color="accent">delete</mat-icon>
+            <span class="item-menu-btn__text">Delete</span>
+        </span>
+    </button>
+</mat-menu>

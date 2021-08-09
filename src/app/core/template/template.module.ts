@@ -16,6 +16,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { NavbarNewSubjectComponent } from './components/navbar/navbar-new-subject/navbar-new-subject.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ListItemComponent } from './components/utils/list-item/list-item.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     NavbarComponent,
     NotebarComponent,
     NavbarNewSubjectComponent,
+    ListItemComponent,
   ],
   imports: [
     CommonModule,

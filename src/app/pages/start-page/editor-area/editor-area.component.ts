@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component, ElementRef,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { Note, NoteUpdateDto } from "@models/note.interface";
 import { NoteFacade } from "@state/note/note.facade";
 import { DOCUMENT } from "@angular/common";
@@ -17,6 +26,8 @@ type editorModelType = keyof editorModel
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorAreaComponent implements OnInit, OnChanges {
+  @ViewChild('titleField') private titleField!: ElementRef;
+  @ViewChild('descriptionField') private descriptionField!: ElementRef;
 
   @Input() note: Note | null = null;
 
@@ -35,13 +46,18 @@ export class EditorAreaComponent implements OnInit, OnChanges {
   }
 
   formatDoc(command: string, attr?: string) {
-    this.doc.execCommand(command, false, attr)
+    this.doc.execCommand(command, false, attr);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.note) {
       this.model.title = this.note.title;
       this.model.description = this.note.description;
+
+      if (this.titleField && this.descriptionField) {
+        this.titleField.nativeElement.innerHTML = this.note.title;
+        this.descriptionField.nativeElement.innerHTML = this.note.title;
+      }
     }
   }
 

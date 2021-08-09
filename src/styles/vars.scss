@@ -8,3 +8,9 @@ $gutter: 20px;
 	align-items: $item;
 	flex-wrap: $wrap;
 }
+
+@mixin sliceText() {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}

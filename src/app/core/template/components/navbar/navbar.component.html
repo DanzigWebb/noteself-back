@@ -6,16 +6,12 @@
     >
         <div class="navbar-inner">
             <mat-nav-list class="subjects" *ngIf="subjectState">
-                <mat-list-item
-                    class="subject"
+                <app-list-item
+                    title="New Subject"
+                    icon="add_circle"
                     #menuTrigger="matMenuTrigger"
-                    [matMenuTriggerFor]="menu"
-                >
-                    <mat-icon class="subject-icon" color="accent">add_circle</mat-icon>
-                    <div class="subject-info">
-                        <span class="subject-title">New Subject</span>
-                    </div>
-                </mat-list-item>
+                    [matMenuTriggerFor]="menu">
+                </app-list-item>
 
                 <mat-menu #menu="matMenu" xPosition="after">
                     <app-navbar-new-subject
@@ -28,36 +24,27 @@
 
                 <mat-divider></mat-divider>
 
-                <mat-list-item class="subject" (click)="checkSubject(null)" [class.checked]="checkedSubject === null">
-                    <mat-icon class="subject-icon" color="primary">folder_open</mat-icon>
-                    <div class="subject-info">
-                        <span class="subject-title">All Subjects</span>
-                    </div>
-                </mat-list-item>
+                <app-list-item
+                    title="All Subjects"
+                    icon="folder_open"
+                    [isActive]="checkedSubject === null"
+                    (click)="checkSubject(null)">
+                </app-list-item>
 
                 <ng-container *ngFor="let subject of subjectState.subjects">
-                    <mat-list-item class="subject" (click)="checkSubject(subject)" [class.checked]="checkedSubject?.id === subject.id">
-                        <mat-icon class="subject-icon" color="primary">folder_open</mat-icon>
-                        <div class="subject-info">
-                            <span class="subject-info__title">{{subject.title}}</span>
-                            <span class="subject-info__description">{{subject.description}}</span>
-                        </div>
-                        <button mat-icon-button class="subject-menu-trigger" (click)="$event.stopPropagation()"
-                                [matMenuTriggerFor]="subjectMenu">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
+                    <app-list-item
+                        [title]="subject.title"
+                        [description]="subject.description"
+                        [updatedAt]="subject.updatedAt"
+                        [isActive]="checkedSubject?.id === subject.id"
+                        [withMenu]="true"
+                        icon="folder_open"
+                        (click)="checkSubject(subject)"
+                        (onDelete)="deleteSubject(subject)">
+                    </app-list-item>
 
-                        <mat-menu #subjectMenu="matMenu" xPosition="after" class="subject-menu">
-                            <button mat-button class="subject-menu-btn" (click)="deleteSubject(subject)">
-                                <span class="subject-menu-btn__inner">
-                                    <mat-icon class="subject-menu-btn__icon" color="accent">delete</mat-icon>
-                                    <span class="subject-menu-btn__text">Delete</span>
-                                </span>
-                            </button>
-                        </mat-menu>
-                    </mat-list-item>
+                    <mat-divider></mat-divider>
                 </ng-container>
-
             </mat-nav-list>
         </div>
     </app-drag-column>
