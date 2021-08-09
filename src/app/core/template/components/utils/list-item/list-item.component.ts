@@ -15,7 +15,8 @@ export class ListItemComponent implements OnInit {
   @Input() updatedAt: Date | null = null;
   @Input() isActive = false;
   @Input() withMenu = false;
-  @Input() icon = 'folder'
+  @Input() icon = 'folder';
+  @Input() color: 'accent' | 'primary' | 'warn' = 'primary';
 
   constructor() {
   }

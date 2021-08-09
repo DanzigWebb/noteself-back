@@ -1,11 +1,21 @@
 @import "src/styles/vars";
 
 .editor {
-	padding: $gutter;
+	padding: $gutter / 2;
+	padding-top: $gutter / 3;
 	user-select: none;
 	
 	&-control {
 		padding-bottom: $gutter;
+		@include flex(row);
+		
+		button {
+			@include flex(row, center, center);
+		}
+	}
+	
+	&-spacer {
+		flex: 1;
 	}
 	
 	&-area {

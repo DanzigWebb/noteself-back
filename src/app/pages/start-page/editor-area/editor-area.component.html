@@ -1,9 +1,5 @@
 <div class="editor" *ngIf="note">
     <div class="editor-control">
-        <button mat-icon-button matTooltip="Save" (click)="saveNote()">
-            <mat-icon class="material-icons-outlined" color="accent">save</mat-icon>
-        </button>
-
         <button mat-icon-button matTooltip="Bold" (click)="formatDoc('bold')">
             <mat-icon class="material-icons-outlined" color="accent">format_bold</mat-icon>
         </button>
@@ -16,8 +12,15 @@
             <mat-icon class="material-icons-outlined" color="accent">format_list_bulleted</mat-icon>
         </button>
 
-        <button mat-icon-button matTooltip="Numeric list" (click)="formatDoc('insertorderedlist')">
+        <button mat-icon-button matTooltip="Numeric list"
+                (click)="formatDoc('insertorderedlist')">
             <mat-icon class="material-icons-outlined" color="accent">format_list_numbered</mat-icon>
+        </button>
+
+        <div class="editor-spacer"></div>
+
+        <button mat-icon-button matTooltip="Save" (click)="saveNote()">
+            <mat-icon class="material-icons-outlined" color="accent">save</mat-icon>
         </button>
     </div>
 
