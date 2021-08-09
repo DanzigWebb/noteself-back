@@ -23,15 +23,16 @@ function initializeApp(storage: UserStorage, user: UserFacade, note: NoteFacade,
 
     if (dto?.accessToken) {
       user.update(dto);
-    }
-
-    forkJoin([
-      note.getAll().pipe(take(1)),
-      subject.getAll().pipe(take(1)),
-    ]).subscribe(() => {
-      note.checkDefaultSubject();
+      forkJoin([
+        note.getAll().pipe(take(1)),
+        subject.getAll().pipe(take(1)),
+      ]).subscribe(() => {
+        note.checkDefaultSubject();
+        resolve(null);
+      });
+    } else {
       resolve(null);
-    });
+    }
   });
 }
 
