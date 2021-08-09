@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
-  Component, ElementRef,
+  Component,
+  ElementRef,
   Inject,
   Input,
   OnChanges,
@@ -31,7 +32,7 @@ export class EditorAreaComponent implements OnInit, OnChanges {
 
   @Input() note: Note | null = null;
 
-  model: editorModel = {
+  public model: editorModel = {
     title: '',
     description: '',
   };
@@ -45,10 +46,6 @@ export class EditorAreaComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
-  formatDoc(command: string, attr?: string) {
-    this.doc.execCommand(command, false, attr);
-  }
-
   ngOnChanges(changes: SimpleChanges) {
     if (this.note) {
       this.model.title = this.note.title;
@@ -59,6 +56,20 @@ export class EditorAreaComponent implements OnInit, OnChanges {
         this.descriptionField.nativeElement.innerHTML = this.note.title;
       }
     }
+  }
+
+  formatDoc(command: string, attr?: string) {
+    this.doc.execCommand(command, false, attr);
+    this.updateModelByRef();
+  }
+
+  updateModelByRef() {
+    this.model.title = this.titleField.nativeElement.innerHTML;
+    this.model.description = this.descriptionField.nativeElement.innerHTML;
+  }
+
+  updateModel(key: editorModelType, value: string) {
+    this.model[key] = value;
   }
 
   saveNote() {
@@ -76,9 +87,5 @@ export class EditorAreaComponent implements OnInit, OnChanges {
       description: this.model.description,
       subject: this.note?.subject || '',
     };
-  }
-
-  updateModel(key: editorModelType, value: string) {
-    this.model[key] = value;
   }
 }
