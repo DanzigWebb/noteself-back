@@ -9,7 +9,8 @@
             [subjectState]="subjectState$ | async"
             [checkedSubject]="checkedSubject$ | async"
             (onCreateSubject)="createSubject($event)"
-            (onCheckSubject)="checkSubject($event)">
+            (onCheckSubject)="checkSubject($event)"
+            (onDeleteSubject)="deleteSubject($event)">
         </app-navbar>
 
         <app-notebar

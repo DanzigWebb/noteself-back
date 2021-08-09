@@ -39,9 +39,22 @@
                     <mat-list-item class="subject" (click)="checkSubject(subject)" [class.checked]="checkedSubject?.id === subject.id">
                         <mat-icon class="subject-icon" color="primary">folder_open</mat-icon>
                         <div class="subject-info">
-                            <span class="subject-title">{{subject.title}}</span>
-                            <span class="subject-description">{{subject.description}}</span>
+                            <span class="subject-info__title">{{subject.title}}</span>
+                            <span class="subject-info__description">{{subject.description}}</span>
                         </div>
+                        <button mat-icon-button class="subject-menu-trigger" (click)="$event.stopPropagation()"
+                                [matMenuTriggerFor]="subjectMenu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+
+                        <mat-menu #subjectMenu="matMenu" xPosition="after" class="subject-menu">
+                            <button mat-button class="subject-menu-btn" (click)="deleteSubject(subject)">
+                                <span class="subject-menu-btn__inner">
+                                    <mat-icon class="subject-menu-btn__icon" color="accent">delete</mat-icon>
+                                    <span class="subject-menu-btn__text">Delete</span>
+                                </span>
+                            </button>
+                        </mat-menu>
                     </mat-list-item>
                 </ng-container>
 

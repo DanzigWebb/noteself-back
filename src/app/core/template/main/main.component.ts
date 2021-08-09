@@ -53,4 +53,8 @@ export class MainComponent implements OnInit {
   checkSubject(item: NoteSubject | null) {
     this.noteFacade.checkBySubject(item);
   }
+
+  deleteSubject(subject: NoteSubject) {
+    this.subjectFacade.delete(subject.id);
+  }
 }

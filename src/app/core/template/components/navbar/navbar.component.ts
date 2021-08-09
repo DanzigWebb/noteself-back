@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
 
   @Output() onCreateSubject = new EventEmitter<NoteSubjectCreateDto>();
   @Output() onCheckSubject = new EventEmitter<NoteSubject | null>();
+  @Output() onDeleteSubject = new EventEmitter<NoteSubject>();
 
   dragLimits = {
     min: DragLimits.min,
@@ -52,5 +53,9 @@ export class NavbarComponent implements OnInit {
 
   checkSubject(item: NoteSubject | null) {
     this.onCheckSubject.emit(item);
+  }
+
+  deleteSubject(subject: NoteSubject) {
+    this.onDeleteSubject.emit(subject);
   }
 }
