@@ -5,6 +5,8 @@ import { MatListModule } from "@angular/material/list";
 import { MatIconModule } from "@angular/material/icon";
 import { DragColumnModule } from "@components/drag-column/drag-column.module";
 import { EditorAreaComponent } from './editor-area/editor-area.component';
+import { MatButtonModule } from "@angular/material/button";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 
 
@@ -15,6 +17,8 @@ import { EditorAreaComponent } from './editor-area/editor-area.component';
     MatListModule,
     MatIconModule,
     DragColumnModule,
-  ]
+    MatButtonModule,
+    MatTooltipModule,
+  ],
 })
 export class StartPageModule { }

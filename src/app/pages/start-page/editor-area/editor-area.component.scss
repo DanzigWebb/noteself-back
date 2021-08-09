@@ -4,9 +4,33 @@
 	padding: $gutter;
 	user-select: none;
 	
+	&-control {
+		padding-bottom: $gutter;
+	}
+	
+	&-area {
+		@include flex(row)
+	}
+	
+	&-description {
+		width: 45px;
+		font-size: 13px;
+		opacity: .6;
+		flex-shrink: 0;
+	}
+	
 	&-title {
 		font-size: 24px;
 		font-weight: bold;
 		margin-bottom: $gutter;
 	}
+	
+	&-field {
+		user-select: all;
+	}
+}
+
+[contenteditable] {
+	-webkit-user-select: text;
+	user-select: text;
 }

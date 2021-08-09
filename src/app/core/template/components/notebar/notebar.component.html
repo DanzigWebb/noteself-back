@@ -14,13 +14,13 @@
             <mat-list-item>
                 <h2 class="note-title">{{noteState.checkedSubject?.title || 'All Subjects'}}</h2>
             </mat-list-item>
-            
+
 
             <ng-container *ngFor="let note of noteState.checkedNotes">
                 <mat-list-item class="note" (click)="onCheckNote(note)">
                     <mat-icon class="note-icon" color="accent">splitscreen</mat-icon>
                     <div class="note-info">
-                        <span class="note-title">{{note.title}}</span>
+                        <span class="note-title" [innerHTML]="note.title"></span>
                         <span class="note-date">{{note.updatedAt | date}}</span>
                     </div>
                 </mat-list-item>

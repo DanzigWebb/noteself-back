@@ -26,3 +26,9 @@ export class Note implements NoteDto {
     this.updatedAt = new Date(n.updatedAt);
   }
 }
+
+export interface NoteUpdateDto {
+  title: string;
+  description: string;
+  subject: string;
+}

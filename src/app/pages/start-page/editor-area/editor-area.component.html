@@ -1,4 +1,33 @@
 <div class="editor" *ngIf="note">
-    <h3 class="editor-title">{{note.title}}</h3>
-    <p class="editor=description">{{note.description}}</p>
+    <div class="editor-control">
+        <button mat-icon-button matTooltip="Save" (click)="saveNote()">
+            <mat-icon class="material-icons-outlined" color="accent">save</mat-icon>
+        </button>
+    </div>
+
+    <div class="editor-area editor-header">
+        <div class="editor-description">Title:</div>
+        <div class="editor-field">
+            <div
+                class="editor-title"
+                contenteditable
+                #titleField
+                (keyup)="updateModel('title', titleField.innerHTML)"
+                [innerHTML]="note.title">
+            </div>
+        </div>
+    </div>
+    <div class="editor-main">
+
+    </div>
+    <div class="editor-area editor-body">
+        <div class="editor-description">Body:</div>
+        <div
+            class="editor-field"
+            contenteditable
+            #descriptionField
+            (keyup)="updateModel('description', descriptionField.innerHTML)"
+            [innerHTML]="note.description">
+        </div>
+    </div>
 </div>

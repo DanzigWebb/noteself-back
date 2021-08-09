@@ -69,4 +69,32 @@ export class NoteState {
       return notes.filter((n) => n.subject === subject.title);
     }
   }
+
+  @Action(NoteActions.Update)
+  update({getState, setState}: StateContext<NoteStateModel>, {dto, id}: NoteActions.Update) {
+    return this.api.updateNote(dto, id).pipe(
+      tap((dto) => {
+        const state = getState();
+        const note = new Note(dto);
+        const notes = [...state.notes];
+        const checkedNotes = [...state.checkedNotes];
+
+        const i = notes.findIndex(n => n.id === note.id);
+        if (i >= 0) {
+          notes[i] = {...note};
+        }
+
+        const j = notes.findIndex(n => n.id === note.id);
+        if (j >= 0) {
+          checkedNotes[j] = {...note};
+        }
+
+        setState({
+          ...state,
+          notes,
+          checkedNotes,
+        });
+      }),
+    );
+  }
 }
