@@ -15,7 +15,8 @@
 
         <app-notebar
             [noteState]="noteState$ | async"
-            (checkNote)="editNote($event)">
+            (onCheckNote)="editNote($event)"
+            (onCreateNote)="createNote()">
         </app-notebar>
 
         <div class="main-content">

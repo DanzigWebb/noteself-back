@@ -12,7 +12,8 @@ export class NotebarComponent implements OnInit {
 
   @Input() noteState: NoteStateModel | null = null;
 
-  @Output() checkNote = new EventEmitter<number>();
+  @Output() onCheckNote = new EventEmitter<number>();
+  @Output() onCreateNote = new EventEmitter();
 
   constructor() {
   }
@@ -20,8 +21,11 @@ export class NotebarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onCheckNote(n: Note): void {
-    this.checkNote.emit(n.id);
+  checkNote(n: Note): void {
+    this.onCheckNote.emit(n.id);
   }
 
+  create() {
+    this.onCreateNote.emit();
+  }
 }

@@ -27,10 +27,11 @@ function initializeApp(storage: UserStorage, user: UserFacade, note: NoteFacade,
 
     forkJoin([
       note.getAll().pipe(take(1)),
-      subject.getAll().pipe(take(1))
+      subject.getAll().pipe(take(1)),
     ]).subscribe(() => {
+      note.checkDefaultSubject();
       resolve(null);
-    })
+    });
   });
 }
 

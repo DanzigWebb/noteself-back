@@ -1,9 +1,21 @@
 import { NoteSubject } from "@models/subject.interface";
-import { NoteUpdateDto } from "@models/note.interface";
+import { NoteCreateDto, NoteUpdateDto } from "@models/note.interface";
 
 export namespace NoteActions {
   export class GetAll {
     static readonly type = '[Note] Get All';
+  }
+
+  export class Create {
+    static readonly type = '[Note] Create';
+    constructor(
+      public dto: NoteCreateDto = {
+        title: '',
+        description: '',
+        subject: ''
+      }
+    ) {
+    }
   }
 
   export class CheckBySubject {

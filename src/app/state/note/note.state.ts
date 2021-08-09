@@ -3,8 +3,9 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { NoteActions } from "@state/note/note.actions";
 import { ApiService } from "@services/api.service";
-import { tap } from "rxjs/operators";
+import { switchMap, tap } from "rxjs/operators";
 import { NoteSubject } from "@models/subject.interface";
+import { Router } from "@angular/router";
 
 export interface NoteStateModel {
   notes: Note[];
@@ -44,17 +45,26 @@ export class NoteState {
 
   constructor(
     private api: ApiService,
+    private router: Router,
   ) {
   }
 
   @Action(NoteActions.GetAll)
-  getAll({getState, setState, dispatch}: StateContext<NoteStateModel>) {
+  getAll({getState, setState}: StateContext<NoteStateModel>) {
     return this.api.getNotes().pipe(
       tap((dto) => {
         const notes: Note[] = dto.map(d => new Note(d));
         setState({...getState(), notes});
-        dispatch(new NoteActions.CheckBySubject(null));
       }),
+    );
+  }
+
+  @Action(NoteActions.Create)
+  create({getState, setState, dispatch}: StateContext<NoteStateModel>, {dto}: NoteActions.Create) {
+    return this.api.createNote(dto).pipe(
+      switchMap((dto) => dispatch(new NoteActions.GetAll()).pipe(
+        tap(() => this.router.navigate(['edit', dto.id])),
+      )),
     );
   }
 

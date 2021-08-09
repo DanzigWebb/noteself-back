@@ -57,4 +57,8 @@ export class MainComponent implements OnInit {
   deleteSubject(subject: NoteSubject) {
     this.subjectFacade.delete(subject.id);
   }
+
+  createNote() {
+    this.noteFacade.create()
+  }
 }

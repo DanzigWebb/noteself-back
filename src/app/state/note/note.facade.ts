@@ -24,8 +24,18 @@ export class NoteFacade {
     );
   }
 
+  create(): Observable<Note> {
+    return this.store.dispatch(new NoteActions.Create());
+  }
+
   checkBySubject(subject: NoteSubject | null): Observable<NoteStateModel> {
     return this.store.dispatch(new NoteActions.CheckBySubject(subject)).pipe(
+      switchMap(() => this.state$),
+    );
+  }
+
+  checkDefaultSubject() {
+    return this.store.dispatch(new NoteActions.CheckBySubject(null)).pipe(
       switchMap(() => this.state$),
     );
   }

@@ -27,6 +27,12 @@ export class Note implements NoteDto {
   }
 }
 
+export interface NoteCreateDto {
+  title: string;
+  description: string;
+  subject: string;
+}
+
 export interface NoteUpdateDto {
   title: string;
   description: string;
