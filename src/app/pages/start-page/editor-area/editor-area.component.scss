@@ -23,10 +23,13 @@
 		font-size: 24px;
 		font-weight: bold;
 		margin-bottom: $gutter;
+		outline: none;
 	}
 	
 	&-field {
 		user-select: all;
+		outline: none;
+		width: 100%;
 	}
 }
 

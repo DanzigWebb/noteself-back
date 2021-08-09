@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Note, NoteUpdateDto } from "@models/note.interface";
 import { NoteFacade } from "@state/note/note.facade";
+import { DOCUMENT } from "@angular/common";
 
 interface editorModel {
   title: string;
@@ -25,11 +26,16 @@ export class EditorAreaComponent implements OnInit, OnChanges {
   };
 
   constructor(
+    @Inject(DOCUMENT) private doc: Document,
     private noteFacade: NoteFacade,
   ) {
   }
 
   ngOnInit(): void {
+  }
+
+  formatDoc(command: string, attr?: string) {
+    this.doc.execCommand(command, false, attr)
   }
 
   ngOnChanges(changes: SimpleChanges) {
