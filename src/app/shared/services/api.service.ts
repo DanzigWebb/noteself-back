@@ -52,6 +52,11 @@ export class ApiService {
     return this.http.post<NoteDto>(`${this.url}note`, {...dto}, {headers});
   }
 
+  deleteNote(id: number): Observable<object> {
+    const headers = this.createHeader();
+    return this.http.delete<NoteDto>(`${this.url}note/${id}`, {headers});
+  }
+
   updateNote(dto: NoteUpdateDto, id: number): Observable<NoteDto> {
     const headers = this.createHeader();
     return this.http.put<NoteDto>(`${this.url}note/${id}`, {...dto}, {headers});

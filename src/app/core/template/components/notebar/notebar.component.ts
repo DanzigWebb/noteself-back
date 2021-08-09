@@ -14,6 +14,7 @@ export class NotebarComponent implements OnInit {
 
   @Output() onCheckNote = new EventEmitter<number>();
   @Output() onCreateNote = new EventEmitter();
+  @Output() onDeleteNote = new EventEmitter<number>();
 
   constructor() {
   }
@@ -27,5 +28,9 @@ export class NotebarComponent implements OnInit {
 
   create() {
     this.onCreateNote.emit();
+  }
+
+  delete(note: Note) {
+    this.onDeleteNote.emit(note.id);
   }
 }

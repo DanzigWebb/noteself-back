@@ -18,6 +18,12 @@ export namespace NoteActions {
     }
   }
 
+  export class Delete {
+    static readonly type = '[Note] Delete';
+    constructor(public id: number) {
+    }
+  }
+
   export class CheckBySubject {
     static readonly type = '[Note] Check by Subject';
     constructor(public payload: NoteSubject | null) {

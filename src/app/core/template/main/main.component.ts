@@ -59,6 +59,10 @@ export class MainComponent implements OnInit {
   }
 
   createNote() {
-    this.noteFacade.create()
+    this.noteFacade.create();
+  }
+
+  deleteNote(id: number) {
+    this.noteFacade.delete(id);
   }
 }

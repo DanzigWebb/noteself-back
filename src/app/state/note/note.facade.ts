@@ -28,6 +28,10 @@ export class NoteFacade {
     return this.store.dispatch(new NoteActions.Create());
   }
 
+  delete(id: number): Observable<NoteStateModel> {
+    return this.store.dispatch(new NoteActions.Delete(id));
+  }
+
   checkBySubject(subject: NoteSubject | null): Observable<NoteStateModel> {
     return this.store.dispatch(new NoteActions.CheckBySubject(subject)).pipe(
       switchMap(() => this.state$),

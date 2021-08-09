@@ -23,7 +23,25 @@
                         <span class="note-title" [innerHTML]="note.title"></span>
                         <span class="note-date">{{note.updatedAt | date}}</span>
                     </div>
+
+                    <button
+                        mat-icon-button
+                        class="note-menu-trigger"
+                        (click)="$event.stopPropagation()"
+                        [matMenuTriggerFor]="subjectMenu"
+                    >
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
                 </mat-list-item>
+
+                <mat-menu #subjectMenu="matMenu" xPosition="after" class="note-menu">
+                    <button mat-button class="note-menu-btn" (click)="delete(note)">
+                        <span class="note-menu-btn__inner">
+                            <mat-icon class="note-menu-btn__icon" color="accent">delete</mat-icon>
+                            <span class="note-menu-btn__text">Delete</span>
+                        </span>
+                    </button>
+                </mat-menu>
 
                 <mat-divider></mat-divider>
             </ng-container>

@@ -63,8 +63,34 @@ export class NoteState {
   create({getState, setState, dispatch}: StateContext<NoteStateModel>, {dto}: NoteActions.Create) {
     return this.api.createNote(dto).pipe(
       switchMap((dto) => dispatch(new NoteActions.GetAll()).pipe(
-        tap(() => this.router.navigate(['edit', dto.id])),
+        tap(() => {
+          const subject = getState().checkedSubject;
+          dispatch(new NoteActions.CheckBySubject(subject));
+          this.router.navigate(['edit', dto.id]);
+        }),
       )),
+    );
+  }
+
+  @Action(NoteActions.Delete)
+  delete({getState, setState, dispatch}: StateContext<NoteStateModel>, {id}: NoteActions.Delete) {
+    return this.api.deleteNote(id).pipe(
+      tap(() => {
+        const state = getState();
+        const notes = state.notes.filter(n => n.id !== id);
+        const checkedNotes = state.checkedNotes.filter(n => n.id !== id);
+
+        setState({
+          ...state,
+          notes,
+          checkedNotes,
+        });
+
+        const isChecked = state.editNote?.id === id;
+        if (isChecked) {
+          dispatch(new NoteActions.CheckForEdit(id));
+        }
+      }),
     );
   }
 

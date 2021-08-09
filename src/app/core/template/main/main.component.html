@@ -16,7 +16,8 @@
         <app-notebar
             [noteState]="noteState$ | async"
             (onCheckNote)="editNote($event)"
-            (onCreateNote)="createNote()">
+            (onCreateNote)="createNote()"
+            (onDeleteNote)="deleteNote($event)">
         </app-notebar>
 
         <div class="main-content">
