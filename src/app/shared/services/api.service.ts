@@ -37,6 +37,11 @@ export class ApiService {
     return this.http.post<NoteSubjectDto>(`${this.url}subject`, {...dto}, {headers});
   }
 
+  deleteSubject(id: number): Observable<object> {
+    const headers = this.createHeader();
+    return this.http.delete<NoteSubjectDto>(`${this.url}subject/${id}`, {headers});
+  }
+
   getNotes(): Observable<NoteDto[]> {
     const headers = this.createHeader();
     return this.http.get<NoteDto[]>(`${this.url}note`, {headers});

@@ -56,4 +56,15 @@ export class SubjectState {
     return dto.map(d => new NoteSubject(d))
       .sort((a, b) => (+b.createdAt) - (+a.createdAt));
   }
+
+  @Action(SubjectActions.Delete)
+  delete({getState, setState}: StateContext<SubjectStateModel>, {id}: SubjectActions.Delete) {
+    return this.api.deleteSubject(id).pipe(
+      tap(() => {
+        const state = getState();
+        const subjects = state.subjects.filter(s => s.id !== id);
+        setState({...state, subjects});
+      }),
+    );
+  }
 }

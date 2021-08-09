@@ -10,4 +10,10 @@ export namespace SubjectActions {
     constructor(public payload: NoteSubjectCreateDto) {
     }
   }
+
+  export class Delete {
+    static readonly type = '[Subject] Delete';
+    constructor(public id: number) {
+    }
+  }
 }
