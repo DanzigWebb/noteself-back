@@ -11,6 +11,7 @@ import { NoteSubject } from "@models/subject.interface";
 export class NoteFacade {
   @Select(NoteState.state) state$!: Observable<NoteStateModel>;
   @Select(NoteState.notes) notes$!: Observable<Note[]>;
+  @Select(NoteState.editNote) editNote$!: Observable<Note | null>;
 
   constructor(
     private store: Store,
@@ -25,6 +26,12 @@ export class NoteFacade {
 
   checkBySubject(subject: NoteSubject | null): Observable<NoteStateModel> {
     return this.store.dispatch(new NoteActions.CheckBySubject(subject)).pipe(
+      switchMap(() => this.state$),
+    );
+  }
+
+  edit(id: number): Observable<NoteStateModel> {
+    return this.store.dispatch(new NoteActions.CheckForEdit(id)).pipe(
       switchMap(() => this.state$),
     );
   }

@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { NoteFacade } from "@state/note/note.facade";
 import { ActivatedRoute } from "@angular/router";
-import { map, switchMap } from "rxjs/operators";
+import { map } from "rxjs/operators";
+import { Observable, Subject } from "rxjs";
+import { Note } from "@models/note.interface";
 
 @Component({
   selector: 'app-start-page',
@@ -9,15 +11,11 @@ import { map, switchMap } from "rxjs/operators";
   styleUrls: ['./start-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartPageComponent implements OnInit {
+export class StartPageComponent implements OnInit, OnDestroy {
 
-  public editNote$ = this.route.paramMap.pipe(
-    map((map) => map.get('id')),
-    map((id) => id ? +id : -1),
-    switchMap((id) => this.note.notes$.pipe(
-      map((notes) => notes.find(n => n.id === id) || null),
-    )),
-  );
+  public editNote$: Observable<Note | null> = this.note.editNote$;
+
+  private unsubscribe = new Subject();
 
   constructor(
     private note: NoteFacade,
@@ -26,5 +24,23 @@ export class StartPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkEditNote();
+  }
+
+  checkEditNote(): void {
+    this.route.paramMap.pipe(
+      map((map) => map.get('id')),
+    ).subscribe((id) => {
+      if (id) {
+        this.note.edit(+id);
+      } else {
+        this.note.edit(-1);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 }

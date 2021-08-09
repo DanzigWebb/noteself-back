@@ -59,8 +59,4 @@ export class EditorAreaComponent implements OnInit, OnChanges {
   updateModel(key: editorModelType, value: string) {
     this.model[key] = value;
   }
-
-  log() {
-    console.log(this.note);
-  }
 }

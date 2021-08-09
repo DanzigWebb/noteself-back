@@ -17,4 +17,10 @@ export namespace NoteActions {
     constructor(public dto: NoteUpdateDto, public id: number) {
     }
   }
+
+  export class CheckForEdit {
+    static readonly type = '[Note] Check for Edit';
+    constructor(public id: number) {
+    }
+  }
 }

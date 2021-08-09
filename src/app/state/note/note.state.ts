@@ -8,12 +8,14 @@ import { NoteSubject } from "@models/subject.interface";
 
 export interface NoteStateModel {
   notes: Note[];
+  editNote: Note | null;
   checkedNotes: Note[];
   checkedSubject: NoteSubject | null;
 }
 
 const defaults: NoteStateModel = {
   notes: [],
+  editNote: null,
   checkedNotes: [],
   checkedSubject: null,
 };
@@ -33,6 +35,11 @@ export class NoteState {
   @Selector()
   static notes(s: NoteStateModel): Note[] {
     return s.notes;
+  }
+
+  @Selector()
+  static editNote(s: NoteStateModel): Note | null {
+    return s.editNote;
   }
 
   constructor(
@@ -68,6 +75,13 @@ export class NoteState {
     } else {
       return notes.filter((n) => n.subject === subject.title);
     }
+  }
+
+  @Action(NoteActions.CheckForEdit)
+  checkForEdit({getState, setState}: StateContext<NoteStateModel>, {id}: NoteActions.CheckForEdit) {
+    const state = getState();
+    const editNote = state.notes.find(n => n.id === id) || null;
+    setState({...state, editNote});
   }
 
   @Action(NoteActions.Update)
