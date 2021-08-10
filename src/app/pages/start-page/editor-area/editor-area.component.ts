@@ -37,7 +37,9 @@ export class EditorAreaComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.title.valueChanges.subscribe(() => {
-      this.updateNote();
+      queueMicrotask(() => {
+        this.updateNote();
+      });
     });
   }
 

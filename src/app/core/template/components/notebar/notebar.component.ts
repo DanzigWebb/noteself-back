@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Note } from "@models/note.interface";
 import { NoteFacade } from "@state/note/note.facade";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-notebar',
@@ -11,6 +12,7 @@ export class NotebarComponent implements OnInit {
 
   constructor(
     public noteFacade: NoteFacade,
+    private router: Router,
   ) {
   }
 
@@ -18,7 +20,7 @@ export class NotebarComponent implements OnInit {
   }
 
   check(n: Note): void {
-    this.noteFacade.edit(n.id);
+    this.router.navigate(['edit', n.id]);
   }
 
   create() {
