@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SubjectStateModel } from "@state/subject/subject.state";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UiFacade } from "@state/ui/ui.facade";
 import { map } from "rxjs/operators";
 import { NoteSubject, NoteSubjectCreateDto } from "@models/subject.interface";
+import { SubjectFacade } from "@state/subject/subject.facade";
 
 enum DragLimits {
   min = 80,
@@ -17,13 +17,6 @@ enum DragLimits {
 })
 export class NavbarComponent implements OnInit {
 
-  @Input() subjectState: SubjectStateModel | null = null;
-  @Input() checkedSubject: NoteSubject | null = null;
-
-  @Output() onCreateSubject = new EventEmitter<NoteSubjectCreateDto>();
-  @Output() onCheckSubject = new EventEmitter<NoteSubject | null>();
-  @Output() onDeleteSubject = new EventEmitter<NoteSubject>();
-
   dragLimits = {
     min: DragLimits.min,
     max: DragLimits.max,
@@ -34,6 +27,7 @@ export class NavbarComponent implements OnInit {
   );
 
   constructor(
+    public subjectFacade: SubjectFacade,
     private ui: UiFacade,
   ) {
   }
@@ -47,15 +41,15 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  createSubject(dto: NoteSubjectCreateDto): void {
-    this.onCreateSubject.emit(dto);
+  check(item: NoteSubject | null) {
+    this.subjectFacade.check(item?.id || -1);
   }
 
-  checkSubject(item: NoteSubject | null) {
-    this.onCheckSubject.emit(item);
+  create(dto: NoteSubjectCreateDto): void {
+    this.subjectFacade.create(dto);
   }
 
-  deleteSubject(subject: NoteSubject) {
-    this.onDeleteSubject.emit(subject);
+  delete(subject: NoteSubject) {
+    this.subjectFacade.delete(subject.id);
   }
 }

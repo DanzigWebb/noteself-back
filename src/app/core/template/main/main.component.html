@@ -5,16 +5,10 @@
     </app-header>
 
     <main class="main">
-        <app-navbar
-            [subjectState]="subjectState$ | async"
-            [checkedSubject]="checkedSubject$ | async"
-            (onCreateSubject)="createSubject($event)"
-            (onCheckSubject)="checkSubject($event)"
-            (onDeleteSubject)="deleteSubject($event)">
-        </app-navbar>
+        <app-navbar></app-navbar>
 
         <app-notebar
-            (onCheck)="editNote($event)"
+            (onCheck)="checkNote($event)"
             (onCreate)="createNote()"
             (onDelete)="deleteNote($event)">
         </app-notebar>

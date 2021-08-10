@@ -16,4 +16,10 @@ export namespace SubjectActions {
     constructor(public id: number) {
     }
   }
+
+  export class Check {
+    static readonly type = '[Subject] Check';
+    constructor(public id: number) {
+    }
+  }
 }

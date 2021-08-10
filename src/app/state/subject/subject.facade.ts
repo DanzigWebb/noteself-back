@@ -29,8 +29,10 @@ export class SubjectFacade {
   }
 
   delete(id: number): Observable<SubjectStateModel> {
-    return this.store.dispatch(new SubjectActions.Delete(id)).pipe(
-      switchMap(() => this.state$),
-    );
+    return this.store.dispatch(new SubjectActions.Delete(id))
+  }
+
+  check(id: number): Observable<SubjectStateModel> {
+    return this.store.dispatch(new SubjectActions.Check(id))
   }
 }

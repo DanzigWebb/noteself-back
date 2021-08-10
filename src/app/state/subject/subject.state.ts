@@ -4,14 +4,17 @@ import { ApiService } from "@services/api.service";
 import { switchMap, tap } from "rxjs/operators";
 import { SubjectActions } from "@state/subject/subject.actions";
 import { Injectable } from "@angular/core";
+import { NoteFacade } from "@state/note/note.facade";
 
 
 export interface SubjectStateModel {
   subjects: NoteSubject[];
+  checkedSubject: NoteSubject | null;
 }
 
 const defaults: SubjectStateModel = {
   subjects: [],
+  checkedSubject: null,
 };
 
 @State<SubjectStateModel>({
@@ -32,15 +35,16 @@ export class SubjectState {
 
   constructor(
     private api: ApiService,
+    private noteFacade: NoteFacade,
   ) {
   }
 
   @Action(SubjectActions.GetAll)
-  getAll({setState}: StateContext<SubjectStateModel>) {
+  getAll({getState, setState}: StateContext<SubjectStateModel>) {
     return this.api.getSubjects().pipe(
       tap((dto) => {
         const subjects: NoteSubject[] = this.parseSubjects(dto);
-        setState({subjects});
+        setState({...getState(), subjects});
       }),
     );
   }
@@ -66,5 +70,12 @@ export class SubjectState {
         setState({...state, subjects});
       }),
     );
+  }
+
+  @Action(SubjectActions.Check)
+  check({getState, setState}: StateContext<SubjectStateModel>, {id}: SubjectActions.Check) {
+    const checkedSubject = getState().subjects.find(s => s.id === id) || null;
+    this.noteFacade.checkBySubject(checkedSubject);
+    setState({...getState(), checkedSubject});
   }
 }

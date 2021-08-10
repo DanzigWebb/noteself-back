@@ -5,7 +5,7 @@
         [minWidth]="dragLimits.min"
     >
         <div class="navbar-inner">
-            <mat-nav-list class="subjects" *ngIf="subjectState">
+            <mat-nav-list class="subjects" *ngIf="subjectFacade.state$ | async as state">
                 <app-list-item
                     title="New Subject"
                     icon="add_circle"
@@ -18,7 +18,7 @@
                         [menu]="menuTrigger"
                         (keydown)="$event.stopPropagation()"
                         (click)="$event.stopPropagation()"
-                        (onSubmit)="createSubject($event)">
+                        (onSubmit)="create($event)">
                     </app-navbar-new-subject>
                 </mat-menu>
 
@@ -27,21 +27,21 @@
                 <app-list-item
                     title="All Subjects"
                     icon="folder_open"
-                    [isActive]="checkedSubject === null"
-                    (click)="checkSubject(null)">
+                    [isActive]="state.checkedSubject === null"
+                    (click)="check(null)">
                 </app-list-item>
 
-                <ng-container *ngFor="let subject of subjectState.subjects">
+                <ng-container *ngFor="let subject of state.subjects">
                     <app-list-item
                         [title]="subject.title"
                         [description]="subject.description"
                         [updatedAt]="subject.updatedAt"
-                        [isActive]="checkedSubject?.id === subject.id"
+                        [isActive]="state.checkedSubject?.id === subject.id"
                         [withMenu]="true"
                         icon="folder_open"
                         color="accent"
-                        (click)="checkSubject(subject)"
-                        (onDelete)="deleteSubject(subject)">
+                        (click)="check(subject)"
+                        (onDelete)="delete(subject)">
                     </app-list-item>
 
                     <mat-divider></mat-divider>

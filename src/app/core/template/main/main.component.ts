@@ -4,8 +4,6 @@ import { SubjectFacade } from "@state/subject/subject.facade";
 import { NoteFacade } from "@state/note/note.facade";
 import { Router } from "@angular/router";
 import { Routers } from "@core/enums/routers.enum";
-import { NoteSubject, NoteSubjectCreateDto } from "@models/subject.interface";
-import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-main',
@@ -15,12 +13,6 @@ import { map } from "rxjs/operators";
 export class MainComponent implements OnInit {
 
   public userState$ = this.userFacade.state$;
-  public subjectState$ = this.subjectFacade.state$;
-  public noteState$ = this.noteFacade.state$;
-
-  public checkedSubject$ = this.noteState$.pipe(
-    map((s) => s.checkedSubject),
-  );
 
   constructor(
     private userFacade: UserFacade,
@@ -33,7 +25,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  editNote(id: number) {
+  checkNote(id: number) {
     this.router.navigate(['edit', id]);
   }
 
@@ -41,18 +33,6 @@ export class MainComponent implements OnInit {
     this.userFacade.logout().subscribe(() => {
       this.router.navigate([Routers.login]);
     });
-  }
-
-  createSubject(dto: NoteSubjectCreateDto) {
-    this.subjectFacade.create(dto);
-  }
-
-  checkSubject(item: NoteSubject | null) {
-    this.noteFacade.checkBySubject(item);
-  }
-
-  deleteSubject(subject: NoteSubject) {
-    this.subjectFacade.delete(subject.id);
   }
 
   createNote() {
