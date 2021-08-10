@@ -29,8 +29,6 @@ export class EditorAreaComponent implements OnInit, OnChanges {
   title = new FormControl();
   description = new FormControl();
 
-  editableTitle = true;
-
   constructor(
     @Inject(DOCUMENT) private doc: Document,
     private noteFacade: NoteFacade,
