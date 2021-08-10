@@ -6,12 +6,7 @@
 
     <main class="main">
         <app-navbar></app-navbar>
-
-        <app-notebar
-            (onCheck)="checkNote($event)"
-            (onCreate)="createNote()"
-            (onDelete)="deleteNote($event)">
-        </app-notebar>
+        <app-notebar></app-notebar>
 
         <div class="main-content">
             <router-outlet></router-outlet>

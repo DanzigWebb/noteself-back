@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Note } from "@models/note.interface";
 import { NoteFacade } from "@state/note/note.facade";
 
@@ -9,12 +9,8 @@ import { NoteFacade } from "@state/note/note.facade";
 })
 export class NotebarComponent implements OnInit {
 
-  @Output() onCheck = new EventEmitter<number>();
-  @Output() onCreate = new EventEmitter();
-  @Output() onDelete = new EventEmitter<number>();
-
   constructor(
-    public noteFacade: NoteFacade
+    public noteFacade: NoteFacade,
   ) {
   }
 
@@ -22,14 +18,14 @@ export class NotebarComponent implements OnInit {
   }
 
   check(n: Note): void {
-    this.onCheck.emit(n.id);
+    this.noteFacade.edit(n.id);
   }
 
   create() {
-    this.onCreate.emit();
+    this.noteFacade.create();
   }
 
-  delete(note: Note) {
-    this.onDelete.emit(note.id);
+  delete(n: Note) {
+    this.noteFacade.delete(n.id);
   }
 }
