@@ -127,7 +127,7 @@ export class NoteState {
     const state = getState();
     const editNote = state.notes.get(id) || null;
 
-    setState({...state, editNote});
+    setState({...state, editNote: editNote ? {...editNote} : null});
   }
 
   @Action(NoteActions.Update)
@@ -135,6 +135,7 @@ export class NoteState {
     const state = getState();
     const notes = state.notes;
     notes.set(note.id, note);
+
     setState({...state, notes});
   }
 

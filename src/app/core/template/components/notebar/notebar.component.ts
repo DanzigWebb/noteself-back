@@ -1,36 +1,35 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NoteStateModel } from "@state/note/note.state";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Note } from "@models/note.interface";
+import { NoteFacade } from "@state/note/note.facade";
 
 @Component({
   selector: 'app-notebar',
   templateUrl: './notebar.component.html',
   styleUrls: ['./notebar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotebarComponent implements OnInit {
 
-  @Input() noteState: NoteStateModel | null = null;
+  @Output() onCheck = new EventEmitter<number>();
+  @Output() onCreate = new EventEmitter();
+  @Output() onDelete = new EventEmitter<number>();
 
-  @Output() onCheckNote = new EventEmitter<number>();
-  @Output() onCreateNote = new EventEmitter();
-  @Output() onDeleteNote = new EventEmitter<number>();
-
-  constructor() {
+  constructor(
+    public noteFacade: NoteFacade
+  ) {
   }
 
   ngOnInit(): void {
   }
 
-  checkNote(n: Note): void {
-    this.onCheckNote.emit(n.id);
+  check(n: Note): void {
+    this.onCheck.emit(n.id);
   }
 
   create() {
-    this.onCreateNote.emit();
+    this.onCreate.emit();
   }
 
   delete(note: Note) {
-    this.onDeleteNote.emit(note.id);
+    this.onDelete.emit(note.id);
   }
 }

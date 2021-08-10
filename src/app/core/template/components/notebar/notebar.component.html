@@ -1,5 +1,5 @@
 <div class="notebar">
-    <app-drag-column *ngIf="noteState">
+    <app-drag-column *ngIf="noteFacade.state$ | async as state">
         <mat-nav-list class="notebar-list">
 
             <app-list-item
@@ -11,19 +11,20 @@
             <mat-divider></mat-divider>
 
             <mat-list-item>
-                <h2 class="notebar-title">{{noteState.checkedSubject?.title || 'All Subjects'}}</h2>
+                <h2 class="notebar-title">{{state.checkedSubject?.title || 'All Subjects'}}</h2>
             </mat-list-item>
 
-            <ng-container *ngFor="let item of noteState.notes | keyvalue">
+            <ng-container *ngFor="let item of state.notes | keyvalue">
                 <app-list-item
                     [title]="item.value.title"
                     [description]="item.value.description"
                     [updatedAt]="item.value.updatedAt"
-                    [isActive]="noteState.editNote?.id === item.value.id"
+                    [isActive]="item.value.id === state.editNote?.id"
                     [withMenu]="true"
+
                     icon="splitscreen"
                     color="accent"
-                    (click)="checkNote(item.value)"
+                    (click)="check(item.value)"
                     (onDelete)="delete(item.value)">
                 </app-list-item>
 
