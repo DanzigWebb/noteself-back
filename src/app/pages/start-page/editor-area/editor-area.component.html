@@ -8,7 +8,8 @@
             <mat-icon class="material-icons-outlined" color="accent">format_italic</mat-icon>
         </button>
 
-        <button mat-icon-button matTooltip="List" (click)="formatDoc('insertunorderedlist')">
+        <button mat-icon-button matTooltip="List"
+                (click)="formatDoc('insertunorderedlist')">
             <mat-icon class="material-icons-outlined" color="accent">format_list_bulleted</mat-icon>
         </button>
 
@@ -29,10 +30,10 @@
         <div class="editor-field">
             <div
                 class="editor-title"
-                contenteditable
                 #titleField
-                (keyup)="updateModel('title', titleField.innerHTML)"
-                [innerHTML]="note.title">
+                contenteditable
+                [formControl]="title"
+                [disabled]="editableTitle">
             </div>
         </div>
     </div>
@@ -43,10 +44,9 @@
         <div class="editor-description">Body:</div>
         <div
             class="editor-field"
-            contenteditable
             #descriptionField
-            (keyup)="updateModel('description', descriptionField.innerHTML)"
-            [innerHTML]="note.description">
+            contenteditable
+            [formControl]="description">
         </div>
     </div>
 </div>

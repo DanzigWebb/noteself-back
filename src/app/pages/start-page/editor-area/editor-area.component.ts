@@ -12,13 +12,7 @@ import {
 import { Note, NoteUpdateDto } from "@models/note.interface";
 import { NoteFacade } from "@state/note/note.facade";
 import { DOCUMENT } from "@angular/common";
-
-interface editorModel {
-  title: string;
-  description: string;
-}
-
-type editorModelType = keyof editorModel
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-editor-area',
@@ -32,10 +26,10 @@ export class EditorAreaComponent implements OnInit, OnChanges {
 
   @Input() note: Note | null = null;
 
-  public model: editorModel = {
-    title: '',
-    description: '',
-  };
+  title = new FormControl();
+  description = new FormControl();
+
+  editableTitle = true;
 
   constructor(
     @Inject(DOCUMENT) private doc: Document,
@@ -48,28 +42,15 @@ export class EditorAreaComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.note) {
-      this.model.title = this.note.title;
-      this.model.description = this.note.description;
-
-      if (this.titleField && this.descriptionField) {
-        this.titleField.nativeElement.innerHTML = this.note.title;
-        this.descriptionField.nativeElement.innerHTML = this.note.title;
-      }
+      this.title.setValue(this.note.title);
+      this.description.setValue(this.note.description);
     }
   }
 
   formatDoc(command: string, attr?: string) {
+    this.title.disable();
     this.doc.execCommand(command, false, attr);
-    this.updateModelByRef();
-  }
-
-  updateModelByRef() {
-    this.model.title = this.titleField.nativeElement.innerHTML;
-    this.model.description = this.descriptionField.nativeElement.innerHTML;
-  }
-
-  updateModel(key: editorModelType, value: string) {
-    this.model[key] = value;
+    this.title.enable();
   }
 
   saveNote() {
@@ -83,8 +64,8 @@ export class EditorAreaComponent implements OnInit, OnChanges {
 
   createDto(): NoteUpdateDto {
     return {
-      title: this.model.title,
-      description: this.model.description,
+      title: this.title.value,
+      description: this.description.value,
       subject: this.note?.subject || '',
     };
   }
