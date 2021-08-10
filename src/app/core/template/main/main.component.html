@@ -1,9 +1,24 @@
 <div class="page">
-    <app-header [userState]="userState$ | async"></app-header>
+    <app-header
+        [userState]="userState$ | async"
+        (logout)="logout()">
+    </app-header>
 
     <main class="main">
-        <app-navbar [subjectState]="subjectState$ | async"></app-navbar>
-        <app-notebar [noteState]="noteState$ | async"></app-notebar>
+        <app-navbar
+            [subjectState]="subjectState$ | async"
+            [checkedSubject]="checkedSubject$ | async"
+            (onCreateSubject)="createSubject($event)"
+            (onCheckSubject)="checkSubject($event)"
+            (onDeleteSubject)="deleteSubject($event)">
+        </app-navbar>
+
+        <app-notebar
+            [noteState]="noteState$ | async"
+            (onCheckNote)="editNote($event)"
+            (onCreateNote)="createNote()"
+            (onDeleteNote)="deleteNote($event)">
+        </app-notebar>
 
         <div class="main-content">
             <router-outlet></router-outlet>

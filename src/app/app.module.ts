@@ -12,16 +12,27 @@ import { UserFacade } from "@state/user/user.facade";
 import { USER_STORAGE, UserStorage } from "@shared/storages/user.storage";
 import { UserDto } from "@models/user.interface";
 import { StartPageModule } from "@pages/start-page/start-page.module";
+import { NoteFacade } from "@state/note/note.facade";
+import { SubjectFacade } from "@state/subject/subject.facade";
+import { forkJoin } from "rxjs";
+import { take } from "rxjs/operators";
 
-function initializeApp(storage: UserStorage, facade: UserFacade): () => Promise<any> {
+function initializeApp(storage: UserStorage, user: UserFacade, note: NoteFacade, subject: SubjectFacade): () => Promise<any> {
   return () => new Promise((resolve) => {
     const dto = <UserDto>storage.state;
 
     if (dto?.accessToken) {
-      facade.update(dto);
+      user.update(dto);
+      forkJoin([
+        note.getAll().pipe(take(1)),
+        subject.getAll().pipe(take(1)),
+      ]).subscribe(() => {
+        note.checkDefaultSubject();
+        resolve(null);
+      });
+    } else {
+      resolve(null);
     }
-
-    resolve(null);
   });
 }
 
@@ -45,7 +56,7 @@ function initializeApp(storage: UserStorage, facade: UserFacade): () => Promise<
   providers: [{
     provide: APP_INITIALIZER,
     useFactory: initializeApp,
-    deps: [USER_STORAGE, UserFacade],
+    deps: [USER_STORAGE, UserFacade, NoteFacade, SubjectFacade],
     multi: true,
   }],
   bootstrap: [AppComponent],

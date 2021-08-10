@@ -1,4 +1,5 @@
 export enum StorageEnum {
   global = 'global',
-  user   = 'user'
+  user   = 'user',
+  ui     = 'ui'
 }

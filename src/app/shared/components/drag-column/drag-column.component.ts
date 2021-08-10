@@ -1,10 +1,20 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { DOCUMENT } from "@angular/common";
 
 enum ScrollLimits {
-  min        = 100,
-  extremeMin = 100,
-  max        = 700,
+  min = 100,
+  max = 700,
 }
 
 @Component({
@@ -16,6 +26,15 @@ enum ScrollLimits {
 export class DragColumnComponent implements OnInit {
 
   @ViewChild('column') column!: ElementRef;
+
+  @Input() maxWidth: number = ScrollLimits.max;
+  @Input() minWidth: number = ScrollLimits.min;
+
+  @Output() onDrag = new EventEmitter<number>();
+
+  private isDrag = false;
+  private startX = 0;
+  private startWidth = 0;
 
   constructor(
     @Inject(DOCUMENT) private doc: Document,
@@ -30,35 +49,33 @@ export class DragColumnComponent implements OnInit {
   }
 
   start(e: MouseEvent): void {
-    const document = this.doc;
-    const navbar = this.column.nativeElement;
+    this.startWidth = parseInt(getComputedStyle(this.column.nativeElement, null).width);
+    this.startX = e.clientX;
+    this.isDrag = true;
+  }
 
-    let startX: any;
-    let startWidth: any;
+  @HostListener('window:mousemove', ['$event'])
+  move(e: MouseEvent): void {
+    if (this.isDrag) {
+      const width = this.calculateWidth(e);
 
-    startX = e.clientX;
-    startWidth = parseInt(getComputedStyle(navbar, null).width);
-    document.documentElement.addEventListener("mousemove", move);
-    document.documentElement.addEventListener("mouseup", end);
-
-
-    function move(e: MouseEvent): void {
-      const setWidth = (): number => {
-        const width = startWidth + e.clientX - startX;
-        if (width >= ScrollLimits.max) {
-          return ScrollLimits.max;
-        } else if (width <= ScrollLimits.min) {
-          return ScrollLimits.min;
-        }
-        return width;
-      };
-
-      navbar.style.width = `${setWidth()}px`;
-    }
-
-    function end(): void {
-      document.documentElement.removeEventListener("mousemove", move);
-      document.documentElement.removeEventListener("mouseup", end);
+      this.onDrag.emit(width);
+      this.column.nativeElement.style.width = `${width}px`;
     }
   }
+
+  @HostListener('window:mouseup')
+  end(): void {
+    this.isDrag = false;
+  }
+
+  calculateWidth(e: MouseEvent): number {
+    const width = this.startWidth + e.clientX - this.startX;
+    if (width >= this.maxWidth) {
+      return this.maxWidth;
+    } else if (width <= this.minWidth) {
+      return this.minWidth;
+    }
+    return width;
+  };
 }

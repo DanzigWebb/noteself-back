@@ -2,10 +2,8 @@
 
 .navbar {
 	position: relative;
-	padding: $gutter;
 	box-sizing: border-box;
 	
-	min-width: 200px;
 	height: 100%;
 	overflow: hidden;
 	
@@ -18,8 +16,4 @@
 
 .subjects {
 	width: 100%;
-	&-icon {
-		font-size: 16px;
-		@include flex(row, center, center)
-	}
 }

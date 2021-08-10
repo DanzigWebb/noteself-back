@@ -1,0 +1,8 @@
+@import "src/styles/vars";
+
+.form {
+	@include flex(column);
+	padding: $gutter / 2;
+	padding-top: 0;
+	border-radius: 5px;
+}

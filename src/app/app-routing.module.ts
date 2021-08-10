@@ -13,7 +13,10 @@ const routes: Routes = [
     component: MainComponent,
     canActivate: [UserGuard],
     children: [
-      {path: '', component: StartPageComponent},
+      {
+        path: 'edit/:id',
+        component: StartPageComponent,
+      },
     ],
   },
   {

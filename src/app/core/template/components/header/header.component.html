@@ -1,14 +1,50 @@
 <mat-toolbar>
     <header class="header">
-        <div class="header-logo">header</div>
+        <!--<div class="header-logo">header</div>-->
+        <button
+            mat-icon-button
+            (click)="toggleSidebar()">
+            <mat-icon
+                class="header-sidebar-icon"
+                color="primary"
+                [class.rotate]="!(isOpenSidebar$ | async)"
+                matTooltip="Toggle Sidebar"
+            >
+                arrow_back_ios_new
+            </mat-icon>
+        </button>
+
         <div class="header-spacer"></div>
         <div class="header-user" *ngIf="userState">
             <button mat-icon-button *ngIf="!userState.isLogin">
                 <mat-icon>login</mat-icon>
             </button>
-            <button mat-icon-button *ngIf="userState.isLogin">
+            <button mat-icon-button *ngIf="userState.isLogin" [matMenuTriggerFor]="menu">
                 <mat-icon>account_box</mat-icon>
             </button>
         </div>
     </header>
 </mat-toolbar>
+
+<mat-menu #menu="matMenu">
+    <div class="menu" *ngIf="user">
+        <button mat-menu-item>
+            <mat-icon color="primary">badge</mat-icon>
+            <span>{{user.firstName}}</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item>
+            <mat-icon color="primary">email</mat-icon>
+            <span>{{user.email}}</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item (click)="onLogout()">
+            <mat-icon color="accent">logout</mat-icon>
+            <span>Logout</span>
+        </button>
+    </div>
+</mat-menu>

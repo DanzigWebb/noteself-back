@@ -7,6 +7,8 @@ import { NoteFacade } from "@state/note/note.facade";
 import { NoteState } from "@state/note/note.state";
 import { SubjectFacade } from "@state/subject/subject.facade";
 import { SubjectState } from "@state/subject/subject.state";
+import { UiState } from "@state/ui/ui.state";
+import { UiFacade } from "@state/ui/ui.facade";
 
 
 @NgModule({
@@ -14,6 +16,7 @@ import { SubjectState } from "@state/subject/subject.state";
     UserFacade,
     NoteFacade,
     SubjectFacade,
+    UiFacade,
   ],
   imports: [
     NgxsModule.forRoot(
@@ -21,6 +24,7 @@ import { SubjectState } from "@state/subject/subject.state";
         UserState,
         NoteState,
         SubjectState,
+        UiState,
       ],
       {
         developmentMode: !environment.production,

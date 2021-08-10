@@ -3,14 +3,22 @@ import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { NoteActions } from "@state/note/note.actions";
 import { ApiService } from "@services/api.service";
-import { tap } from "rxjs/operators";
+import { switchMap, tap } from "rxjs/operators";
+import { NoteSubject } from "@models/subject.interface";
+import { Router } from "@angular/router";
 
 export interface NoteStateModel {
   notes: Note[];
+  editNote: Note | null;
+  checkedNotes: Note[];
+  checkedSubject: NoteSubject | null;
 }
 
 const defaults: NoteStateModel = {
   notes: [],
+  editNote: null,
+  checkedNotes: [],
+  checkedSubject: null,
 };
 
 @State<NoteStateModel>({
@@ -30,17 +38,112 @@ export class NoteState {
     return s.notes;
   }
 
+  @Selector()
+  static editNote(s: NoteStateModel): Note | null {
+    return s.editNote;
+  }
+
   constructor(
     private api: ApiService,
+    private router: Router,
   ) {
   }
 
   @Action(NoteActions.GetAll)
-  getAll({setState}: StateContext<NoteStateModel>) {
+  getAll({getState, setState}: StateContext<NoteStateModel>) {
     return this.api.getNotes().pipe(
       tap((dto) => {
         const notes: Note[] = dto.map(d => new Note(d));
-        setState({notes});
+        setState({...getState(), notes});
+      }),
+    );
+  }
+
+  @Action(NoteActions.Create)
+  create({getState, setState, dispatch}: StateContext<NoteStateModel>, {dto}: NoteActions.Create) {
+    return this.api.createNote(dto).pipe(
+      switchMap((dto) => dispatch(new NoteActions.GetAll()).pipe(
+        tap(() => {
+          const subject = getState().checkedSubject;
+          dispatch(new NoteActions.CheckBySubject(subject));
+          this.router.navigate(['edit', dto.id]);
+        }),
+      )),
+    );
+  }
+
+  @Action(NoteActions.Delete)
+  delete({getState, setState, dispatch}: StateContext<NoteStateModel>, {id}: NoteActions.Delete) {
+    return this.api.deleteNote(id).pipe(
+      tap(() => {
+        const state = getState();
+        const notes = state.notes.filter(n => n.id !== id);
+        const checkedNotes = state.checkedNotes.filter(n => n.id !== id);
+
+        setState({
+          ...state,
+          notes,
+          checkedNotes,
+        });
+
+        const isChecked = state.editNote?.id === id;
+        if (isChecked) {
+          dispatch(new NoteActions.CheckForEdit(id));
+        }
+      }),
+    );
+  }
+
+  @Action(NoteActions.CheckBySubject)
+  checkBySubject({getState, setState}: StateContext<NoteStateModel>, {payload}: NoteActions.CheckBySubject) {
+    const notes = getState().notes;
+    let checkedNotes = this.filterNotes(payload, notes);
+    setState({
+      ...getState(),
+      checkedNotes,
+      checkedSubject: payload,
+    });
+  }
+
+  filterNotes(subject: NoteSubject | null, notes: Note[]): Note[] {
+    if (!subject) {
+      return notes;
+    } else {
+      return notes.filter((n) => n.subject === subject.title);
+    }
+  }
+
+  @Action(NoteActions.CheckForEdit)
+  checkForEdit({getState, setState}: StateContext<NoteStateModel>, {id}: NoteActions.CheckForEdit) {
+    const state = getState();
+    const editNote = state.notes.find(n => n.id === id) || null;
+    setState({...state, editNote});
+  }
+
+  @Action(NoteActions.Update)
+  update({getState, setState}: StateContext<NoteStateModel>, {dto, id}: NoteActions.Update) {
+    return this.api.updateNote(dto, id).pipe(
+      tap((dto) => {
+        const state = getState();
+        const note = new Note(dto);
+        const notes = [...state.notes];
+        const checkedNotes = [...state.checkedNotes];
+
+        const i = notes.findIndex(n => n.id === note.id);
+        if (i >= 0) {
+          notes[i] = {...note};
+        }
+
+        const j = notes.findIndex(n => n.id === note.id);
+        if (j >= 0) {
+          checkedNotes[j] = {...note};
+        }
+
+        setState({
+          ...state,
+          notes,
+          checkedNotes,
+        });
       }),
     );
   }

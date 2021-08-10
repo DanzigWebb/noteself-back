@@ -1,7 +1,7 @@
-import { NoteSubject } from "@models/subject.interface";
+import { NoteSubject, NoteSubjectDto } from "@models/subject.interface";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { ApiService } from "@services/api.service";
-import { tap } from "rxjs/operators";
+import { switchMap, tap } from "rxjs/operators";
 import { SubjectActions } from "@state/subject/subject.actions";
 import { Injectable } from "@angular/core";
 
@@ -39,8 +39,31 @@ export class SubjectState {
   getAll({setState}: StateContext<SubjectStateModel>) {
     return this.api.getSubjects().pipe(
       tap((dto) => {
-        const subjects: NoteSubject[] = dto.map(d => new NoteSubject(d));
+        const subjects: NoteSubject[] = this.parseSubjects(dto);
         setState({subjects});
+      }),
+    );
+  }
+
+  @Action(SubjectActions.Create)
+  create({dispatch}: StateContext<SubjectStateModel>, {payload}: SubjectActions.Create) {
+    return this.api.createSubject(payload).pipe(
+      switchMap(() => dispatch(new SubjectActions.GetAll())),
+    );
+  }
+
+  parseSubjects(dto: NoteSubjectDto[]): NoteSubject[] {
+    return dto.map(d => new NoteSubject(d))
+      .sort((a, b) => (+b.createdAt) - (+a.createdAt));
+  }
+
+  @Action(SubjectActions.Delete)
+  delete({getState, setState}: StateContext<SubjectStateModel>, {id}: SubjectActions.Delete) {
+    return this.api.deleteSubject(id).pipe(
+      tap(() => {
+        const state = getState();
+        const subjects = state.subjects.filter(s => s.id !== id);
+        setState({...state, subjects});
       }),
     );
   }

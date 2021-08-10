@@ -12,4 +12,13 @@
 		font-size: 14px;
 		font-weight: normal;
 	}
+	
+	&-sidebar {
+		&-icon {
+			transition: .2s ease all;
+			&.rotate {
+				transform: rotate(180deg);
+			}
+		}
+	}
 }

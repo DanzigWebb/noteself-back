@@ -1,0 +1,49 @@
+@import "src/styles/vars";
+
+.editor {
+	padding: $gutter / 2;
+	padding-top: $gutter / 3;
+	user-select: none;
+	
+	&-control {
+		padding-bottom: $gutter;
+		@include flex(row);
+		
+		button {
+			@include flex(row, center, center);
+		}
+	}
+	
+	&-spacer {
+		flex: 1;
+	}
+	
+	&-area {
+		@include flex(row)
+	}
+	
+	&-description {
+		width: 45px;
+		font-size: 13px;
+		opacity: .6;
+		flex-shrink: 0;
+	}
+	
+	&-title {
+		font-size: 24px;
+		font-weight: bold;
+		margin-bottom: $gutter;
+		outline: none;
+	}
+	
+	&-field {
+		user-select: all;
+		outline: none;
+		width: 100%;
+	}
+}
+
+[contenteditable] {
+	-webkit-user-select: text;
+	user-select: text;
+}

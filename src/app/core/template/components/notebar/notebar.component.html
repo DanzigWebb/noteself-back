@@ -1,13 +1,35 @@
 <div class="notebar">
     <app-drag-column *ngIf="noteState">
         <mat-nav-list class="notebar-list">
-            <mat-list-item *ngFor="let note of noteState.notes" class="note">
-                <mat-icon class="note-icon" color="accent">splitscreen</mat-icon>
-                <div class="note-info">
-                    <span class="note-title">{{note.title}}</span>
-                    <span class="note-date">{{note.updatedAt | date}}</span>
-                </div>
+
+            <app-list-item
+                title="New Note"
+                icon="add_circle"
+                (click)="create()">
+            </app-list-item>
+
+            <mat-divider></mat-divider>
+
+            <mat-list-item>
+                <h2 class="notebar-title">{{noteState.checkedSubject?.title || 'All Subjects'}}</h2>
             </mat-list-item>
+
+            <ng-container *ngFor="let note of noteState.checkedNotes">
+                <app-list-item
+                    [title]="note.title"
+                    [description]="note.description"
+                    [updatedAt]="note.updatedAt"
+                    [isActive]="noteState.editNote?.id === note.id"
+                    [withMenu]="true"
+                    icon="splitscreen"
+                    color="accent"
+                    (click)="checkNote(note)"
+                    (onDelete)="delete(note)">
+                </app-list-item>
+
+                <mat-divider></mat-divider>
+            </ng-container>
+
         </mat-nav-list>
     </app-drag-column>
 </div>

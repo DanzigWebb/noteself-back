@@ -1,0 +1,52 @@
+<div class="editor" *ngIf="note">
+    <div class="editor-control">
+        <button mat-icon-button matTooltip="Bold" (click)="formatDoc('bold')">
+            <mat-icon class="material-icons-outlined" color="accent">format_bold</mat-icon>
+        </button>
+
+        <button mat-icon-button matTooltip="Cursive" (click)="formatDoc('italic')">
+            <mat-icon class="material-icons-outlined" color="accent">format_italic</mat-icon>
+        </button>
+
+        <button mat-icon-button matTooltip="List"
+                (click)="formatDoc('insertunorderedlist')">
+            <mat-icon class="material-icons-outlined" color="accent">format_list_bulleted</mat-icon>
+        </button>
+
+        <button mat-icon-button matTooltip="Numeric list"
+                (click)="formatDoc('insertorderedlist')">
+            <mat-icon class="material-icons-outlined" color="accent">format_list_numbered</mat-icon>
+        </button>
+
+        <div class="editor-spacer"></div>
+
+        <button mat-icon-button matTooltip="Save" (click)="saveNote()">
+            <mat-icon class="material-icons-outlined" color="accent">save</mat-icon>
+        </button>
+    </div>
+
+    <div class="editor-area editor-header">
+        <div class="editor-description">Title:</div>
+        <div class="editor-field">
+            <div
+                class="editor-title"
+                #titleField
+                contenteditable
+                [formControl]="title"
+                [disabled]="editableTitle">
+            </div>
+        </div>
+    </div>
+    <div class="editor-main">
+
+    </div>
+    <div class="editor-area editor-body">
+        <div class="editor-description">Body:</div>
+        <div
+            class="editor-field"
+            #descriptionField
+            contenteditable
+            [formControl]="description">
+        </div>
+    </div>
+</div>
