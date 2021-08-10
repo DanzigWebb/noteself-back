@@ -1,55 +1,48 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { UserFacade } from "@state/user/user.facade";
-import { UserLoginDto } from "@models/user.interface";
-import { catchError } from "rxjs/operators";
-import { HttpErrorResponse } from "@angular/common/http";
-import { throwError } from "rxjs";
-import { Routers } from "@core/enums/routers.enum";
-import { Router } from "@angular/router";
+import { UserLoginDto, UserRegistrationDto } from '@models/user.interface';
+import { UserFacade } from '@state/user/user.facade';
+import { Router } from '@angular/router';
+import { Routers } from '@core/enums/routers.enum';
+import { catchError } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
 
-enum LoginValidatorsEnum {
-  name = 'invalidLogin'
-}
+type FormView = 'login' | 'registration';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPageComponent implements OnInit {
 
-  form!: FormGroup;
-
-  get nameInput() {
-    return this.form.get('name');
-  }
-
-  get invalidError() {
-    return this.nameInput?.errors?.[LoginValidatorsEnum.name];
-  }
+  view: FormView = 'login';
 
   constructor(
-    private fb: FormBuilder,
     private user: UserFacade,
-    private router: Router,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
-    this.initForm();
   }
 
-  private initForm(): void {
-    this.form = this.fb.group({
-      name: [null, Validators.required],
-      password: [null, Validators.required],
+  toggleView() {
+    if (this.view === 'login') {
+      this.view = 'registration';
+    } else {
+      this.view = 'login';
+    }
+  }
+
+  registration(dto: UserRegistrationDto) {
+    this.user.registration(dto).subscribe(() => {
+      this.goToHome();
     });
   }
 
-  login(): void {
-    const dto = this.createLoginDto();
+  login(dto: UserLoginDto) {
     this.user.login(dto).pipe(
       catchError((err: HttpErrorResponse) => {
         alert(err.message);
@@ -60,14 +53,7 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  private createLoginDto(): UserLoginDto {
-    const name = this.form.value.name;
-    const password = this.form.value.password;
-
-    return {name, password};
-  }
-
-  private goToHome() {
+  private goToHome(): Promise<boolean> {
     return this.router.navigate([Routers.home]);
   }
 }

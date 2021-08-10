@@ -1,21 +1,16 @@
 <div class="login">
-    <form class="login-form" [formGroup]="form">
+    <app-login
+        *ngIf="view === 'login'"
+        (onSubmit)="login($event)">
+    </app-login>
 
-        <mat-form-field>
-            <mat-label>Login</mat-label>
-            <input type="text" matInput placeholder="Ivan" formControlName="name" autocomplete="off">
-            <mat-error>
-                <span *ngIf="nameInput?.errors?.required">Required field</span>
-                <span *ngIf="invalidError">Invalid login or password</span>
-            </mat-error>
-        </mat-form-field>
+    <app-registration
+        *ngIf="view === 'registration'"
+        (onSubmit)="registration($event)">
+    </app-registration>
 
-        <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input type="password" matInput placeholder="****" formControlName="password">
-            <mat-error>Required field</mat-error>
-        </mat-form-field>
-
-        <button mat-flat-button color="primary" (click)="login()">Login</button>
-    </form>
+    <button class="login-btn" mat-button color="primary" (click)="toggleView()">
+        <span *ngIf="view === 'login'">Registration</span>
+        <span *ngIf="view === 'registration'">Login</span>
+    </button>
 </div>

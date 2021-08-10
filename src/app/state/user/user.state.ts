@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { UserActions } from './user.actions';
-import { UserDto } from "@models/user.interface";
-import { ApiService } from "@services/api.service";
-import { tap } from "rxjs/operators";
-import { USER_STORAGE, UserStorage } from "@shared/storages/user.storage";
+import { UserDto } from '@models/user.interface';
+import { ApiService } from '@services/api.service';
+import { tap } from 'rxjs/operators';
+import { USER_STORAGE, UserStorage } from '@shared/storages/user.storage';
 
 export interface UserStateModel {
   isLogin: boolean;
@@ -46,6 +46,16 @@ export class UserState {
   @Action(UserActions.Login)
   login({setState}: StateContext<UserStateModel>, {payload}: UserActions.Login) {
     return this.api.login(payload).pipe(
+      tap((user) => {
+        setState({isLogin: true, user});
+        this.storage.setUser(user);
+      }),
+    );
+  }
+
+  @Action(UserActions.Registration)
+  registration({setState}: StateContext<UserStateModel>, {payload}: UserActions.Registration) {
+    return this.api.registration(payload).pipe(
       tap((user) => {
         setState({isLogin: true, user});
         this.storage.setUser(user);

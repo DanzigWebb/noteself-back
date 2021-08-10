@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { Select, Store } from "@ngxs/store";
-import { UserState, UserStateModel } from "@state/user/user.state";
-import { Observable } from "rxjs";
-import { UserDto, UserLoginDto } from "@models/user.interface";
-import { UserActions } from "@state/user/user.actions";
-import { switchMap } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
+import { UserState, UserStateModel } from '@state/user/user.state';
+import { Observable } from 'rxjs';
+import { UserDto, UserLoginDto, UserRegistrationDto } from '@models/user.interface';
+import { UserActions } from '@state/user/user.actions';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class UserFacade {
@@ -19,6 +19,12 @@ export class UserFacade {
 
   login(payload: UserLoginDto): Observable<UserStateModel> {
     return this.store.dispatch(new UserActions.Login(payload)).pipe(
+      switchMap(() => this.state$),
+    );
+  }
+
+  registration(payload: UserRegistrationDto): Observable<UserStateModel> {
+    return this.store.dispatch(new UserActions.Registration(payload)).pipe(
       switchMap(() => this.state$),
     );
   }

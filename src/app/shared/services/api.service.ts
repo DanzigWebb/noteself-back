@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { APP_CONFIG, AppConfig } from "@core/config";
-import { UserDto, UserLoginDto } from "@models/user.interface";
+import { UserDto, UserLoginDto, UserRegistrationDto } from "@models/user.interface";
 import { Observable } from "rxjs";
 import { NoteSubjectCreateDto, NoteSubjectDto } from "@models/subject.interface";
 import { NoteCreateDto, NoteDto, NoteUpdateDto } from "@models/note.interface";
@@ -68,5 +68,9 @@ export class ApiService {
 
     return new HttpHeaders()
       .append('Authorization', `Bearer ${token}`);
+  }
+
+  registration(dto: UserRegistrationDto): Observable<UserDto> {
+    return this.http.post<UserDto>(`${this.url}user`, dto);
   }
 }

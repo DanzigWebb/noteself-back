@@ -1,0 +1,19 @@
+<form class="login-form" [formGroup]="form">
+
+    <mat-form-field>
+        <mat-label>Login</mat-label>
+        <input type="text" matInput placeholder="Ivan" formControlName="name" autocomplete="off">
+        <mat-error>
+            <span *ngIf="nameInput?.errors?.required">Required field</span>
+            <span *ngIf="invalidError">Invalid login or password</span>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" matInput placeholder="****" formControlName="password">
+        <mat-error>Required field</mat-error>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" (click)="submit()">Login</button>
+</form>
