@@ -14,7 +14,7 @@
                 <h2 class="notebar-title">{{state.checkedSubject?.title || 'All Subjects'}}</h2>
             </mat-list-item>
 
-            <ng-container *ngFor="let item of state.notes | keyvalue">
+            <ng-container *ngFor="let item of state.checkedNotes | keyvalue">
                 <app-list-item
                     [title]="item.value.title"
                     [description]="item.value.description"
