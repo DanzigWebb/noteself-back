@@ -36,6 +36,9 @@ export class EditorAreaComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.title.valueChanges.subscribe(() => {
+      this.updateNote();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -56,8 +59,19 @@ export class EditorAreaComponent implements OnInit, OnChanges {
       const dto: NoteUpdateDto = this.createDto();
       const id = this.note.id;
 
-      this.noteFacade.update(dto, id);
+      this.noteFacade.save(dto, id);
     }
+  }
+
+  updateNote() {
+    const dto = this.createDto();
+    const note = <Note>{
+      ...this.note,
+      title: dto.title,
+      description: dto.description,
+    };
+
+    this.noteFacade.update(note);
   }
 
   createDto(): NoteUpdateDto {

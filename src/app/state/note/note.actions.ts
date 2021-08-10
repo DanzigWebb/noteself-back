@@ -1,5 +1,5 @@
 import { NoteSubject } from "@models/subject.interface";
-import { NoteCreateDto, NoteUpdateDto } from "@models/note.interface";
+import { Note, NoteCreateDto, NoteUpdateDto } from "@models/note.interface";
 
 export namespace NoteActions {
   export class GetAll {
@@ -30,9 +30,15 @@ export namespace NoteActions {
     }
   }
 
-  export class Update {
-    static readonly type = '[Note] Update one';
+  export class Save {
+    static readonly type = '[Note] Save One';
     constructor(public dto: NoteUpdateDto, public id: number) {
+    }
+  }
+
+  export class Update {
+    static readonly type = '[Note] Update One';
+    constructor(public note: Note) {
     }
   }
 

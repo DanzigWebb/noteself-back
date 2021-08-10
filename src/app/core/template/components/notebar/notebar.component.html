@@ -14,17 +14,17 @@
                 <h2 class="notebar-title">{{noteState.checkedSubject?.title || 'All Subjects'}}</h2>
             </mat-list-item>
 
-            <ng-container *ngFor="let note of noteState.checkedNotes">
+            <ng-container *ngFor="let item of noteState.notes | keyvalue">
                 <app-list-item
-                    [title]="note.title"
-                    [description]="note.description"
-                    [updatedAt]="note.updatedAt"
-                    [isActive]="noteState.editNote?.id === note.id"
+                    [title]="item.value.title"
+                    [description]="item.value.description"
+                    [updatedAt]="item.value.updatedAt"
+                    [isActive]="noteState.editNote?.id === item.value.id"
                     [withMenu]="true"
                     icon="splitscreen"
                     color="accent"
-                    (click)="checkNote(note)"
-                    (onDelete)="delete(note)">
+                    (click)="checkNote(item.value)"
+                    (onDelete)="delete(item.value)">
                 </app-list-item>
 
                 <mat-divider></mat-divider>

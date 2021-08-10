@@ -8,16 +8,19 @@ import { NoteSubject } from "@models/subject.interface";
 import { Router } from "@angular/router";
 
 export interface NoteStateModel {
-  notes: Note[];
+  notes: NoteMap;
+  checkedNotes: NoteMap;
   editNote: Note | null;
-  checkedNotes: Note[];
   checkedSubject: NoteSubject | null;
 }
 
+export type NoteMap = Map<number, Note>;
+
+
 const defaults: NoteStateModel = {
-  notes: [],
+  notes: new Map<number, Note>(),
+  checkedNotes: new Map<number, Note>(),
   editNote: null,
-  checkedNotes: [],
   checkedSubject: null,
 };
 
@@ -34,7 +37,7 @@ export class NoteState {
   }
 
   @Selector()
-  static notes(s: NoteStateModel): Note[] {
+  static notes(s: NoteStateModel): NoteMap {
     return s.notes;
   }
 
@@ -53,7 +56,10 @@ export class NoteState {
   getAll({getState, setState}: StateContext<NoteStateModel>) {
     return this.api.getNotes().pipe(
       tap((dto) => {
-        const notes: Note[] = dto.map(d => new Note(d));
+        const noteModels: Note[] = dto.map(d => new Note(d));
+        const notes = new Map();
+        noteModels.forEach((n) => notes.set(n.id, n));
+
         setState({...getState(), notes});
       }),
     );
@@ -77,15 +83,12 @@ export class NoteState {
     return this.api.deleteNote(id).pipe(
       tap(() => {
         const state = getState();
-        const notes = state.notes.filter(n => n.id !== id);
-        const checkedNotes = state.checkedNotes.filter(n => n.id !== id);
+        state.notes.delete(id);
+        state.checkedNotes.delete(id);
 
-        setState({
-          ...state,
-          notes,
-          checkedNotes,
-        });
+        setState({...state});
 
+        // Убираем заметку из редактирования, если она была удалена
         const isChecked = state.editNote?.id === id;
         if (isChecked) {
           dispatch(new NoteActions.CheckForEdit(id));
@@ -97,7 +100,8 @@ export class NoteState {
   @Action(NoteActions.CheckBySubject)
   checkBySubject({getState, setState}: StateContext<NoteStateModel>, {payload}: NoteActions.CheckBySubject) {
     const notes = getState().notes;
-    let checkedNotes = this.filterNotes(payload, notes);
+    const checkedNotes = this.filterNotes(payload, notes);
+
     setState({
       ...getState(),
       checkedNotes,
@@ -105,38 +109,49 @@ export class NoteState {
     });
   }
 
-  filterNotes(subject: NoteSubject | null, notes: Note[]): Note[] {
+  filterNotes(subject: NoteSubject | null, notes: NoteMap): NoteMap {
+    const map: NoteMap = new Map<number, Note>();
     if (!subject) {
       return notes;
     } else {
-      return notes.filter((n) => n.subject === subject.title);
+      Array.from(notes.values())
+        .filter((n) => n.subject === subject.title)
+        .forEach(n => map.set(n.id, n));
+
+      return map;
     }
   }
 
   @Action(NoteActions.CheckForEdit)
   checkForEdit({getState, setState}: StateContext<NoteStateModel>, {id}: NoteActions.CheckForEdit) {
     const state = getState();
-    const editNote = state.notes.find(n => n.id === id) || null;
+    const editNote = state.notes.get(id) || null;
+
     setState({...state, editNote});
   }
 
   @Action(NoteActions.Update)
-  update({getState, setState}: StateContext<NoteStateModel>, {dto, id}: NoteActions.Update) {
+  update({getState, setState}: StateContext<NoteStateModel>, {note}: NoteActions.Update) {
+    const state = getState();
+    const notes = state.notes;
+    notes.set(note.id, note);
+    setState({...state, notes});
+  }
+
+  @Action(NoteActions.Save)
+  save({getState, setState}: StateContext<NoteStateModel>, {dto, id}: NoteActions.Save) {
     return this.api.updateNote(dto, id).pipe(
       tap((dto) => {
         const state = getState();
         const note = new Note(dto);
-        const notes = [...state.notes];
-        const checkedNotes = [...state.checkedNotes];
+        const {notes, checkedNotes} = state;
 
-        const i = notes.findIndex(n => n.id === note.id);
-        if (i >= 0) {
-          notes[i] = {...note};
+        if (notes.has(id)) {
+          notes.set(note.id, note);
         }
 
-        const j = notes.findIndex(n => n.id === note.id);
-        if (j >= 0) {
-          checkedNotes[j] = {...note};
+        if (checkedNotes.has(id)) {
+          checkedNotes.set(note.id, note);
         }
 
         setState({

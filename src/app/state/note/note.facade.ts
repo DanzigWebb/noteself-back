@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
-import { NoteState, NoteStateModel } from "@state/note/note.state";
+import { NoteMap, NoteState, NoteStateModel } from "@state/note/note.state";
 import { Observable } from "rxjs";
 import { Note, NoteUpdateDto } from "@models/note.interface";
 import { NoteActions } from "@state/note/note.actions";
@@ -10,7 +10,7 @@ import { NoteSubject } from "@models/subject.interface";
 @Injectable()
 export class NoteFacade {
   @Select(NoteState.state) state$!: Observable<NoteStateModel>;
-  @Select(NoteState.notes) notes$!: Observable<Note[]>;
+  @Select(NoteState.notes) notes$!: Observable<NoteMap>;
   @Select(NoteState.editNote) editNote$!: Observable<Note | null>;
 
   constructor(
@@ -50,9 +50,13 @@ export class NoteFacade {
     );
   }
 
-  update(dto: NoteUpdateDto, id: number): Observable<NoteStateModel> {
-    return this.store.dispatch(new NoteActions.Update(dto, id)).pipe(
+  save(dto: NoteUpdateDto, id: number): Observable<NoteStateModel> {
+    return this.store.dispatch(new NoteActions.Save(dto, id)).pipe(
       switchMap(() => this.state$),
     );
+  }
+
+  update(note: Note): Observable<NoteStateModel> {
+    return this.store.dispatch(new NoteActions.Update(note));
   }
 }
