@@ -3,7 +3,6 @@ import { Select, Store } from "@ngxs/store";
 import { NavbarStateModel, UiState, UiStateModel } from "@state/ui/ui.state";
 import { Observable } from "rxjs";
 import { UiActions } from "@state/ui/ui.actions";
-import { switchMap } from "rxjs/operators";
 
 @Injectable()
 export class UiFacade {
@@ -17,15 +16,15 @@ export class UiFacade {
 
   navbar = {
     show: (): Observable<NavbarStateModel> => this.store
-      .dispatch(new UiActions.ShowNavbar())
-      .pipe(switchMap(() => this.sidebar$)),
+      .dispatch(new UiActions.ShowNavbar()),
 
     hide: (): Observable<NavbarStateModel> => this.store
-      .dispatch(new UiActions.HideNavbar())
-      .pipe(switchMap(() => this.sidebar$)),
+      .dispatch(new UiActions.HideNavbar()),
 
     toggle: (): Observable<NavbarStateModel> => this.store
-      .dispatch(new UiActions.ToggleNavbar())
-      .pipe(switchMap(() => this.sidebar$)),
+      .dispatch(new UiActions.ToggleNavbar()),
+
+    setWidth: (width: number): Observable<NavbarStateModel> => this.store
+      .dispatch(new UiActions.SetWidthNavbar(width)),
   };
 }

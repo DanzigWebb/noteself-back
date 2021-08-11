@@ -10,5 +10,11 @@ export namespace UiActions {
   export class ToggleNavbar {
     static readonly type = '[Ui.Navbar] Toggle Navbar';
   }
+
+  export class SetWidthNavbar {
+    static readonly type = '[Ui.Navbar] Set Width';
+    constructor(public width: number) {
+    }
+  }
 }
 

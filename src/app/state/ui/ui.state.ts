@@ -9,11 +9,13 @@ export interface UiStateModel {
 
 export interface NavbarStateModel {
   isOpen: boolean;
+  width: number;
 }
 
 const defaults: UiStateModel = {
   navbar: {
     isOpen: true,
+    width: 200,
   },
 };
 
@@ -41,9 +43,11 @@ export class UiState {
   @Action(UiActions.HideNavbar)
   hideNavbar({getState, setState}: StateContext<UiStateModel>) {
     const state = getState();
+    const isOpen = false;
+
     setState({
       ...state,
-      navbar: {isOpen: false},
+      navbar: {...state.navbar, isOpen},
     });
 
     this.storage.updateNavbarState(getState().navbar);
@@ -52,9 +56,11 @@ export class UiState {
   @Action(UiActions.ShowNavbar)
   showNavbar({getState, setState}: StateContext<UiStateModel>) {
     const state = getState();
+    const isOpen = true;
+
     setState({
       ...state,
-      navbar: {isOpen: true},
+      navbar: {...state.navbar, isOpen},
     });
 
     this.storage.updateNavbarState(getState().navbar);
@@ -64,9 +70,23 @@ export class UiState {
   toggleNavbar({getState, setState}: StateContext<UiStateModel>) {
     const state = getState();
     const isOpen = !state.navbar.isOpen;
+
     setState({
       ...state,
-      navbar: {isOpen},
+      navbar: {...state.navbar, isOpen},
+    });
+
+    this.storage.updateNavbarState(getState().navbar);
+  }
+
+  @Action(UiActions.SetWidthNavbar)
+  setWidth({getState, setState}: StateContext<UiStateModel>, {width}: UiActions.SetWidthNavbar) {
+    const state = getState();
+    const w = width <= 200 ? 200 : width;
+
+    setState({
+      ...state,
+      navbar: {...state.navbar, width: w},
     });
 
     this.storage.updateNavbarState(getState().navbar);
