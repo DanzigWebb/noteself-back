@@ -5,6 +5,7 @@ import {
   Inject,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   ViewChild,
@@ -22,7 +23,7 @@ import { takeUntil } from "rxjs/operators";
   styleUrls: ['./editor-area.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditorAreaComponent implements OnInit, OnChanges {
+export class EditorAreaComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('titleField') private titleField!: ElementRef;
   @ViewChild('descriptionField') private descriptionField!: ElementRef;
 
@@ -96,5 +97,10 @@ export class EditorAreaComponent implements OnInit, OnChanges {
       description: this.description.value,
       subject: this.note?.subject || null,
     };
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
