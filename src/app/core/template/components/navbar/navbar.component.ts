@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UiFacade } from "@state/ui/ui.facade";
-import { map } from "rxjs/operators";
+import { map, take } from "rxjs/operators";
 import { NoteSubject, NoteSubjectCreateDto } from "@models/subject.interface";
 import { SubjectFacade } from "@state/subject/subject.facade";
 
@@ -26,6 +26,8 @@ export class NavbarComponent implements OnInit {
     map((s) => s.isOpen),
   );
 
+  width = 200;
+
   constructor(
     public subjectFacade: SubjectFacade,
     private ui: UiFacade,
@@ -33,9 +35,15 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.ui.state$
+      .pipe(take(1))
+      .subscribe(s => {
+        this.width = s.navbar.width;
+      });
   }
 
   onDrag(e: number) {
+    this.ui.navbar.setWidth(e);
     if (e === DragLimits.min) {
       this.ui.navbar.hide();
     }

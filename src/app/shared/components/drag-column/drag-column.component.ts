@@ -29,6 +29,7 @@ export class DragColumnComponent implements OnInit {
 
   @Input() maxWidth: number = ScrollLimits.max;
   @Input() minWidth: number = ScrollLimits.min;
+  @Input() width = 200;
 
   @Output() onDrag = new EventEmitter<number>();
 

@@ -3,6 +3,7 @@
         (onDrag)="onDrag($event)"
         [maxWidth]="dragLimits.max"
         [minWidth]="dragLimits.min"
+        [width]="width"
     >
         <div class="navbar-inner">
             <mat-nav-list class="subjects" *ngIf="subjectFacade.state$ | async as state">

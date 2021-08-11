@@ -16,10 +16,24 @@ import { NoteFacade } from "@state/note/note.facade";
 import { SubjectFacade } from "@state/subject/subject.facade";
 import { forkJoin } from "rxjs";
 import { take } from "rxjs/operators";
+import { UiStateModel } from "@state/ui/ui.state";
+import { UI_STORAGE, UiStorage } from "@shared/storages/ui.storage";
+import { UiFacade } from "@state/ui/ui.facade";
 
-function initializeApp(storage: UserStorage, user: UserFacade, note: NoteFacade, subject: SubjectFacade): () => Promise<any> {
+// Todo: вынести в InitModule
+function initializeApp(storage: UserStorage, uiStorage: UiStorage, uiFacade: UiFacade, user: UserFacade, note: NoteFacade, subject: SubjectFacade): () => Promise<any> {
   return () => new Promise((resolve) => {
     const dto = <UserDto>storage.state;
+    const ui = <UiStateModel>uiStorage.state;
+
+
+    if (ui) {
+      const navbar = ui.navbar;
+      uiFacade.navbar.setWidth(navbar.width);
+      navbar.isOpen
+        ? uiFacade.navbar.show()
+        : uiFacade.navbar.hide();
+    }
 
     if (dto?.accessToken) {
       user.update(dto);
@@ -56,7 +70,7 @@ function initializeApp(storage: UserStorage, user: UserFacade, note: NoteFacade,
   providers: [{
     provide: APP_INITIALIZER,
     useFactory: initializeApp,
-    deps: [USER_STORAGE, UserFacade, NoteFacade, SubjectFacade],
+    deps: [USER_STORAGE, UI_STORAGE, UiFacade, UserFacade, NoteFacade, SubjectFacade],
     multi: true,
   }],
   bootstrap: [AppComponent],
