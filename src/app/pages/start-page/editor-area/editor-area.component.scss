@@ -4,6 +4,11 @@
 	padding: $gutter / 2;
 	padding-top: $gutter / 3;
 	user-select: none;
+	overflow: hidden;
+	box-sizing: border-box;
+	height: 100%;
+	
+	@include flex(column);
 	
 	&-control {
 		padding-bottom: $gutter;
@@ -20,6 +25,14 @@
 	
 	&-area {
 		@include flex(row)
+	}
+	
+	&-body {
+		overflow: hidden;
+		
+		.editor-field {
+			overflow-y: scroll;
+		}
 	}
 	
 	&-description {
