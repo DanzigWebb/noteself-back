@@ -80,7 +80,7 @@ export class EditorAreaComponent implements OnInit, OnChanges {
     return {
       title: this.title.value,
       description: this.description.value,
-      subject: this.note?.subject || '',
+      subject: this.note?.subject || null,
     };
   }
 }

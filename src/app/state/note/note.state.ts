@@ -115,7 +115,7 @@ export class NoteState {
       return notes;
     } else {
       Array.from(notes.values())
-        .filter((n) => n.subject === subject.title)
+        .filter((n) => n.id === subject.id)
         .forEach(n => map.set(n.id, n));
 
       return map;
