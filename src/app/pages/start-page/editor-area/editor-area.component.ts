@@ -13,6 +13,8 @@ import { Note, NoteUpdateDto } from "@models/note.interface";
 import { NoteFacade } from "@state/note/note.facade";
 import { DOCUMENT } from "@angular/common";
 import { FormControl } from "@angular/forms";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: 'app-editor-area',
@@ -29,6 +31,8 @@ export class EditorAreaComponent implements OnInit, OnChanges {
   title = new FormControl();
   description = new FormControl();
 
+  unsubscribe$ = new Subject();
+
   constructor(
     @Inject(DOCUMENT) private doc: Document,
     private noteFacade: NoteFacade,
@@ -36,11 +40,21 @@ export class EditorAreaComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.title.valueChanges.subscribe(() => {
-      queueMicrotask(() => {
-        this.updateNote();
+    this.title.valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        queueMicrotask(() => {
+          this.updateNote();
+        });
       });
-    });
+
+    this.description.valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        queueMicrotask(() => {
+          this.updateNote();
+        });
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -2,7 +2,10 @@
     <mat-icon class="item-icon" [color]="color">{{icon}}</mat-icon>
     <div class="item-info">
         <span class="item-title" *ngIf="title" [innerHTML]="title"></span>
-        <span class="item-date" *ngIf="updatedAt">{{updatedAt | date}}</span>
+        <div class="item-extra">
+            <span class="item-extra__date" *ngIf="updatedAt">{{updatedAt | date}}</span>
+            <span class="item-extra__description" *ngIf="description" [innerHTML]="description"></span>
+        </div>
     </div>
 
     <button

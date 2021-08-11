@@ -20,9 +20,29 @@
 		flex: 1;
 	}
 	
+	&-extra {
+		@include flex(row, flex-start, center);
+		
+		&__date {
+			font-size: 12px;
+			font-weight: normal;
+			opacity: .9;
+			flex-shrink: 0;
+			padding-right: $gutter / 4;
+		}
+		
+		&__description {
+			font-size: 12px;
+			font-weight: lighter;
+			opacity: .75;
+		}
+	}
+	
 	&-info,
 	&-title,
-	&-date {
+	&-extra,
+	&-extra__date,
+	&-extra__description, {
 		@include sliceText;
 	}
 	
@@ -39,10 +59,6 @@
 	
 	&-menu {
 		min-height: auto;
-		
-		&__wrapper {
-		
-		}
 		
 		&-btn {
 			width: 100%;

@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
 @Component({
   selector: 'app-list-item',
@@ -6,7 +15,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
   styleUrls: ['./list-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListItemComponent implements OnInit {
+export class ListItemComponent implements OnInit, OnChanges {
 
   @Output() onDelete = new EventEmitter();
 
@@ -22,6 +31,18 @@ export class ListItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.title = this.parseText(this.title);
+    this.description = this.parseText(this.description);
+  }
+
+  parseText(item: string) {
+    const parser = new DOMParser();
+    const el = parser.parseFromString(item, 'text/html');
+    return el.querySelector('body')?.innerText.trim() || '';
   }
 
   delete() {
