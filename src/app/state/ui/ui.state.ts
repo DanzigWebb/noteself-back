@@ -82,11 +82,10 @@ export class UiState {
   @Action(UiActions.SetWidthNavbar)
   setWidth({getState, setState}: StateContext<UiStateModel>, {width}: UiActions.SetWidthNavbar) {
     const state = getState();
-    const w = width <= 200 ? 200 : width;
 
     setState({
       ...state,
-      navbar: {...state.navbar, width: w},
+      navbar: {...state.navbar, width},
     });
 
     this.storage.updateNavbarState(getState().navbar);

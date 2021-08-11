@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { UiFacade } from "@state/ui/ui.facade";
-import { map, take } from "rxjs/operators";
+import { map, takeUntil } from "rxjs/operators";
 import { NoteSubject, NoteSubjectCreateDto } from "@models/subject.interface";
 import { SubjectFacade } from "@state/subject/subject.facade";
+import { Subject } from "rxjs";
 
 enum DragLimits {
   min = 80,
@@ -15,7 +16,7 @@ enum DragLimits {
   styleUrls: ['./navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
 
   dragLimits = {
     min: DragLimits.min,
@@ -28,6 +29,8 @@ export class NavbarComponent implements OnInit {
 
   width = 200;
 
+  unsubscribe$ = new Subject();
+
   constructor(
     public subjectFacade: SubjectFacade,
     private ui: UiFacade,
@@ -36,7 +39,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.ui.state$
-      .pipe(take(1))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(s => {
         this.width = s.navbar.width;
       });
@@ -46,6 +49,7 @@ export class NavbarComponent implements OnInit {
     this.ui.navbar.setWidth(e);
     if (e === DragLimits.min) {
       this.ui.navbar.hide();
+      this.ui.navbar.setWidth(e + 20);
     }
   }
 
@@ -59,5 +63,10 @@ export class NavbarComponent implements OnInit {
 
   delete(subject: NoteSubject) {
     this.subjectFacade.delete(subject.id);
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
