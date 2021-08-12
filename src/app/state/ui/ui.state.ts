@@ -5,6 +5,7 @@ import { UI_STORAGE, UiStorage } from "@shared/storages/ui.storage";
 
 export interface UiStateModel {
   navbar: NavbarStateModel;
+  notebar: NotebarStateModel;
 }
 
 export interface NavbarStateModel {
@@ -12,9 +13,16 @@ export interface NavbarStateModel {
   width: number;
 }
 
+export interface NotebarStateModel {
+  width: number;
+}
+
 const defaults: UiStateModel = {
   navbar: {
     isOpen: true,
+    width: 200,
+  },
+  notebar: {
     width: 200,
   },
 };
@@ -50,7 +58,7 @@ export class UiState {
       navbar: {...state.navbar, isOpen},
     });
 
-    this.storage.updateNavbarState(getState().navbar);
+    this.storage.updateUiState(getState());
   }
 
   @Action(UiActions.ShowNavbar)
@@ -63,7 +71,7 @@ export class UiState {
       navbar: {...state.navbar, isOpen},
     });
 
-    this.storage.updateNavbarState(getState().navbar);
+    this.storage.updateUiState(getState());
   }
 
   @Action(UiActions.ToggleNavbar)
@@ -76,11 +84,11 @@ export class UiState {
       navbar: {...state.navbar, isOpen},
     });
 
-    this.storage.updateNavbarState(getState().navbar);
+    this.storage.updateUiState(getState());
   }
 
   @Action(UiActions.SetWidthNavbar)
-  setWidth({getState, setState}: StateContext<UiStateModel>, {width}: UiActions.SetWidthNavbar) {
+  setWidthNavbar({getState, setState}: StateContext<UiStateModel>, {width}: UiActions.SetWidthNavbar) {
     const state = getState();
 
     setState({
@@ -88,6 +96,18 @@ export class UiState {
       navbar: {...state.navbar, width},
     });
 
-    this.storage.updateNavbarState(getState().navbar);
+    this.storage.updateUiState(getState());
+  }
+
+  @Action(UiActions.SetWidthNotebar)
+  setWidthNotebar({getState, setState}: StateContext<UiStateModel>, {width}: UiActions.SetWidthNotebar) {
+    const state = getState();
+
+    setState({
+      ...state,
+      notebar: {...state.notebar, width},
+    });
+
+    this.storage.updateUiState(getState());
   }
 }

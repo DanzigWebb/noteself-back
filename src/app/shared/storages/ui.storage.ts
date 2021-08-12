@@ -2,7 +2,7 @@ import { inject, Injectable, InjectionToken } from "@angular/core";
 import { AbstractStorage } from "@shared/storages/abstract.storage";
 import { DOCUMENT } from "@angular/common";
 import { StorageEnum } from "@shared/storages/storage.enum";
-import { NavbarStateModel } from "@state/ui/ui.state";
+import { NavbarStateModel, NotebarStateModel, UiStateModel } from "@state/ui/ui.state";
 
 @Injectable()
 export class UiStorage extends AbstractStorage {
@@ -13,8 +13,9 @@ export class UiStorage extends AbstractStorage {
     super.init();
   }
 
-  updateNavbarState(state: NavbarStateModel) {
-    this.setItem<NavbarStateModel>('navbar', state)
+  updateUiState(state: UiStateModel) {
+    this.setItem<NotebarStateModel>('notebar', state.notebar);
+    this.setItem<NavbarStateModel>('navbar', state.navbar);
   }
 }
 

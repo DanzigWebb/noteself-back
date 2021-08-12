@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDrag(e: number) {
+  setWidth(e: number) {
     this.ui.navbar.setWidth(e);
     if (e === DragLimits.min) {
       this.ui.navbar.hide();

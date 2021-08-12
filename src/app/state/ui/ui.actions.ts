@@ -16,5 +16,11 @@ export namespace UiActions {
     constructor(public width: number) {
     }
   }
+
+  export class SetWidthNotebar {
+    static readonly type = '[Ui.Notebar] Set Width';
+    constructor(public width: number) {
+    }
+  }
 }
 

@@ -1,6 +1,6 @@
 <div class="navbar" *ngIf="isOpen$ | async">
     <app-drag-column
-        (onDrag)="onDrag($event)"
+        (onDrag)="setWidth($event)"
         [maxWidth]="dragLimits.max"
         [minWidth]="dragLimits.min"
         [width]="width"

@@ -27,4 +27,9 @@ export class UiFacade {
     setWidth: (width: number): Observable<NavbarStateModel> => this.store
       .dispatch(new UiActions.SetWidthNavbar(width)),
   };
+
+  notebar = {
+    setWidth: (width: number): Observable<NavbarStateModel> => this.store
+      .dispatch(new UiActions.SetWidthNotebar(width)),
+  };
 }

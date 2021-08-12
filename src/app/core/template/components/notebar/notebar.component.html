@@ -1,5 +1,9 @@
 <div class="notebar">
-    <app-drag-column *ngIf="noteFacade.state$ | async as state">
+    <app-drag-column
+        *ngIf="noteFacade.state$ | async as state"
+        [width]="width"
+        (onDrag)="setWidth($event)"
+    >
         <mat-nav-list class="notebar-list">
 
             <app-list-item

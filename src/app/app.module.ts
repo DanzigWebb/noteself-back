@@ -28,11 +28,16 @@ function initializeApp(storage: UserStorage, uiStorage: UiStorage, uiFacade: UiF
 
 
     if (ui) {
-      const navbar = ui.navbar;
-      uiFacade.navbar.setWidth(navbar.width);
-      navbar.isOpen
-        ? uiFacade.navbar.show()
-        : uiFacade.navbar.hide();
+      const {navbar, notebar} = ui;
+      if (navbar) {
+        uiFacade.navbar.setWidth(navbar?.width);
+        navbar?.isOpen
+          ? uiFacade.navbar.show()
+          : uiFacade.navbar.hide();
+      }
+      if (notebar) {
+        uiFacade.notebar.setWidth(notebar?.width);
+      }
     }
 
     if (dto?.accessToken) {
