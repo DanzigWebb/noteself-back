@@ -72,12 +72,7 @@ export class EditorAreaComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   saveNote() {
-    if (this.note) {
-      const dto: NoteUpdateDto = this.createDto();
-      const id = this.note.id;
-
-      this.noteFacade.save(dto, id);
-    }
+    this.noteFacade.saveAll()
   }
 
   updateNote() {

@@ -1,4 +1,4 @@
-import { Note } from "@models/note.interface";
+import { Note, NoteUpdateDto } from "@models/note.interface";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { NoteActions } from "@state/note/note.actions";
@@ -134,7 +134,10 @@ export class NoteState {
   update({getState, setState}: StateContext<NoteStateModel>, {note}: NoteActions.Update) {
     const state = getState();
     const notes = state.notes;
-    notes.set(note.id, note);
+    const isUpdated = true;
+    const updatedAt = new Date();
+
+    notes.set(note.id, {...note, isUpdated, updatedAt});
 
     setState({...state, notes});
   }
@@ -162,5 +165,20 @@ export class NoteState {
         });
       }),
     );
+  }
+
+  @Action(NoteActions.SaveAll)
+  saveAll({getState, dispatch}: StateContext<NoteStateModel>) {
+    Array.from(getState().notes.values())
+      .filter(n => n.isUpdated)
+      .forEach(n => {
+        const dto: NoteUpdateDto = {
+          title: n.title,
+          description: n.description,
+          subject: n.subject,
+        };
+
+        dispatch(new NoteActions.Save(dto, n.id));
+      });
   }
 }

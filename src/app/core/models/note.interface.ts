@@ -16,6 +16,8 @@ export class Note implements NoteDto {
   createdAt: Date;
   updatedAt: Date;
 
+  isUpdated = false;
+
   constructor(n: NoteDto) {
     this.id = n.id;
     this.title = n.title;

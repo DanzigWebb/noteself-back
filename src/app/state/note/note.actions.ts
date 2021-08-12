@@ -36,6 +36,10 @@ export namespace NoteActions {
     }
   }
 
+  export class SaveAll {
+    static readonly type = '[Note] Save All';
+  }
+
   export class Update {
     static readonly type = '[Note] Update One';
     constructor(public note: Note) {

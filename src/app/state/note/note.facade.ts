@@ -51,9 +51,11 @@ export class NoteFacade {
   }
 
   save(dto: NoteUpdateDto, id: number): Observable<NoteStateModel> {
-    return this.store.dispatch(new NoteActions.Save(dto, id)).pipe(
-      switchMap(() => this.state$),
-    );
+    return this.store.dispatch(new NoteActions.Save(dto, id));
+  }
+
+  saveAll() {
+    return this.store.dispatch(new NoteActions.SaveAll());
   }
 
   update(note: Note): Observable<NoteStateModel> {
