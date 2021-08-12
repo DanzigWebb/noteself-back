@@ -19,6 +19,13 @@
 		}
 	}
 	
+	&-date {
+		text-align: center;
+		padding-bottom: $gutter;
+		font-weight: bold;
+		opacity: .5;
+	}
+	
 	&-spacer {
 		flex: 1;
 	}
