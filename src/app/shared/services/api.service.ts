@@ -4,7 +4,7 @@ import { APP_CONFIG, AppConfig } from "@core/config";
 import { UserDto, UserLoginDto, UserRegistrationDto } from "@models/user.interface";
 import { Observable } from "rxjs";
 import { NoteSubjectCreateDto, NoteSubjectDto } from "@models/subject.interface";
-import { NoteCreateDto, NoteDto, NoteUpdateDto } from "@models/note.interface";
+import { CreatedNoteDto, NoteCreateDto, NoteDto, NoteUpdateDto } from "@models/note.interface";
 import { USER_STORAGE, UserStorage } from "@shared/storages/user.storage";
 
 @Injectable({
@@ -47,9 +47,9 @@ export class ApiService {
     return this.http.get<NoteDto[]>(`${this.url}note`, {headers});
   }
 
-  createNote(dto: NoteCreateDto): Observable<NoteDto> {
+  createNote(dto: NoteCreateDto): Observable<CreatedNoteDto> {
     const headers = this.createHeader();
-    return this.http.post<NoteDto>(`${this.url}note`, {...dto}, {headers});
+    return this.http.post<CreatedNoteDto>(`${this.url}note`, {...dto}, {headers});
   }
 
   deleteNote(id: number): Observable<object> {

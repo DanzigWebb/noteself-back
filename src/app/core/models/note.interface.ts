@@ -1,3 +1,5 @@
+import { NoteSubjectDto } from "@models/subject.interface";
+
 export interface NoteDto {
   id: number;
   title: string;
@@ -32,11 +34,20 @@ export class Note implements NoteDto {
 export interface NoteCreateDto {
   title: string;
   description: string;
-  subject: string;
+  subject: number | null;
 }
 
 export interface NoteUpdateDto {
   title: string;
   description: string;
   subject: number | null;
+}
+
+export interface CreatedNoteDto {
+  id: number;
+  title: string;
+  description: string;
+  subject: NoteSubjectDto | null;
+  createdAt: string | Date;
+  updatedAt: string | Date;
 }

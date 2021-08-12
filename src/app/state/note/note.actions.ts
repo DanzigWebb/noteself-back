@@ -12,7 +12,7 @@ export namespace NoteActions {
       public dto: NoteCreateDto = {
         title: '',
         description: '',
-        subject: ''
+        subject: null
       }
     ) {
     }

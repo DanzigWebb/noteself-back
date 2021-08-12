@@ -1,9 +1,9 @@
-import { Note, NoteUpdateDto } from "@models/note.interface";
+import { Note, NoteDto, NoteUpdateDto } from "@models/note.interface";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { NoteActions } from "@state/note/note.actions";
 import { ApiService } from "@services/api.service";
-import { switchMap, tap } from "rxjs/operators";
+import { tap } from "rxjs/operators";
 import { NoteSubject } from "@models/subject.interface";
 import { Router } from "@angular/router";
 
@@ -67,14 +67,21 @@ export class NoteState {
 
   @Action(NoteActions.Create)
   create({getState, setState, dispatch}: StateContext<NoteStateModel>, {dto}: NoteActions.Create) {
+    const state = getState();
+    const subject = state.checkedSubject;
+    dto.subject = subject?.id || null;
+
     return this.api.createNote(dto).pipe(
-      switchMap((dto) => dispatch(new NoteActions.GetAll()).pipe(
-        tap(() => {
-          const subject = getState().checkedSubject;
-          dispatch(new NoteActions.CheckBySubject(subject));
-          this.router.navigate(['edit', dto.id]);
-        }),
-      )),
+      tap((dto) => {
+        const notes = state.notes;
+        const noteDto = <NoteDto>{...dto, subject: dto.subject?.id || null};
+        const note = new Note(noteDto);
+
+        notes.set(note.id, note);
+
+        dispatch(new NoteActions.CheckBySubject(subject));
+        this.router.navigate(['edit', dto.id]);
+      }),
     );
   }
 
@@ -102,6 +109,9 @@ export class NoteState {
     const notes = getState().notes;
     const checkedNotes = this.filterNotes(payload, notes);
 
+    console.log('notes', notes);
+    console.log('checkedNotes', checkedNotes);
+
     setState({
       ...getState(),
       checkedNotes,
@@ -115,7 +125,7 @@ export class NoteState {
       return notes;
     } else {
       Array.from(notes.values())
-        .filter((n) => n.id === subject.id)
+        .filter((n) => n.subject === subject.id)
         .forEach(n => map.set(n.id, n));
 
       return map;
@@ -134,12 +144,14 @@ export class NoteState {
   update({getState, setState}: StateContext<NoteStateModel>, {note}: NoteActions.Update) {
     const state = getState();
     const notes = state.notes;
+    const checkedNotes = state.checkedNotes;
     const isUpdated = true;
     const updatedAt = new Date();
 
     notes.set(note.id, {...note, isUpdated, updatedAt});
+    checkedNotes.set(note.id, {...note, isUpdated, updatedAt});
 
-    setState({...state, notes});
+    setState({...state, notes, checkedNotes});
   }
 
   @Action(NoteActions.Save)
