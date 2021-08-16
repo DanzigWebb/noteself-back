@@ -79,6 +79,8 @@ export class NoteState {
 
         notes.set(note.id, note);
 
+        setState({...state, notes: new Map<number, Note>(notes)});
+
         dispatch(new NoteActions.CheckBySubject(subject));
         this.router.navigate(['edit', dto.id]);
       }),
@@ -93,7 +95,10 @@ export class NoteState {
         state.notes.delete(id);
         state.checkedNotes.delete(id);
 
-        setState({...state});
+        const notes = new Map<number, Note>(state.notes);
+        const checkedNotes = new Map<number, Note>(state.checkedNotes);
+
+        setState({...state, notes, checkedNotes});
 
         // Убираем заметку из редактирования, если она была удалена
         const isChecked = state.editNote?.id === id;
@@ -108,9 +113,6 @@ export class NoteState {
   checkBySubject({getState, setState}: StateContext<NoteStateModel>, {payload}: NoteActions.CheckBySubject) {
     const notes = getState().notes;
     const checkedNotes = this.filterNotes(payload, notes);
-
-    console.log('notes', notes);
-    console.log('checkedNotes', checkedNotes);
 
     setState({
       ...getState(),

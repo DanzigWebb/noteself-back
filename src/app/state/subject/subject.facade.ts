@@ -9,7 +9,7 @@ import { SubjectActions } from "@state/subject/subject.actions";
 @Injectable()
 export class SubjectFacade {
   @Select(SubjectState.state) state$!: Observable<SubjectStateModel>;
-  @Select(SubjectState.notes) notes$!: Observable<NoteSubject[]>;
+  @Select(SubjectState.notes) subjects$!: Observable<NoteSubject[]>;
 
   constructor(
     private store: Store,
