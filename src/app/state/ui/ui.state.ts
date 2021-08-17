@@ -6,6 +6,7 @@ import { UI_STORAGE, UiStorage } from "@shared/storages/ui.storage";
 export interface UiStateModel {
   navbar: NavbarStateModel;
   notebar: NotebarStateModel;
+  combinebar: CombinebarStateModel;
 }
 
 export interface NavbarStateModel {
@@ -17,6 +18,10 @@ export interface NotebarStateModel {
   width: number;
 }
 
+export interface CombinebarStateModel {
+  isOpen: boolean;
+}
+
 const defaults: UiStateModel = {
   navbar: {
     isOpen: true,
@@ -24,6 +29,9 @@ const defaults: UiStateModel = {
   },
   notebar: {
     width: 200,
+  },
+  combinebar: {
+    isOpen: true,
   },
 };
 
@@ -106,6 +114,45 @@ export class UiState {
     setState({
       ...state,
       notebar: {...state.notebar, width},
+    });
+
+    this.storage.updateUiState(getState());
+  }
+
+  @Action(UiActions.ShowCombinebar)
+  showCombinebar({getState, setState}: StateContext<UiStateModel>) {
+    const state = getState();
+    const isOpen = true;
+
+    setState({
+      ...state,
+      combinebar: {...state.combinebar, isOpen},
+    });
+
+    this.storage.updateUiState(getState());
+  }
+
+  @Action(UiActions.HideCombinebar)
+  hideCombinebar({getState, setState}: StateContext<UiStateModel>) {
+    const state = getState();
+    const isOpen = false;
+
+    setState({
+      ...state,
+      combinebar: {...state.combinebar, isOpen},
+    });
+
+    this.storage.updateUiState(getState());
+  }
+
+  @Action(UiActions.ToggleCombinebar)
+  toggleCombinebar({getState, setState}: StateContext<UiStateModel>) {
+    const state = getState();
+    const isOpen = !state.combinebar.isOpen;
+
+    setState({
+      ...state,
+      combinebar: {...state.combinebar, isOpen},
     });
 
     this.storage.updateUiState(getState());

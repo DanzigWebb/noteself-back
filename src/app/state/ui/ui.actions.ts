@@ -22,5 +22,17 @@ export namespace UiActions {
     constructor(public width: number) {
     }
   }
+
+  export class ShowCombinebar {
+    static readonly type = '[Ui.Combinebar] Show';
+  }
+
+  export class HideCombinebar {
+    static readonly type = '[Ui.Combinebar] Hide';
+  }
+
+  export class ToggleCombinebar {
+    static readonly type = '[Ui.Combinebar] Toggle';
+  }
 }
 

@@ -32,4 +32,15 @@ export class UiFacade {
     setWidth: (width: number): Observable<NavbarStateModel> => this.store
       .dispatch(new UiActions.SetWidthNotebar(width)),
   };
+
+  combinebar = {
+    show: (): Observable<NavbarStateModel> => this.store
+      .dispatch(new UiActions.ShowCombinebar()),
+
+    hide: (): Observable<NavbarStateModel> => this.store
+      .dispatch(new UiActions.HideCombinebar()),
+
+    toggle: (): Observable<NavbarStateModel> => this.store
+      .dispatch(new UiActions.ToggleCombinebar()),
+  }
 }
