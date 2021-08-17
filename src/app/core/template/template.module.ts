@@ -17,6 +17,8 @@ import { MatInputModule } from "@angular/material/input";
 import { NavbarNewSubjectComponent } from './components/navbar/navbar-new-subject/navbar-new-subject.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ListItemComponent } from './components/utils/list-item/list-item.component';
+import { CombinebarComponent } from './components/combinebar/combinebar.component';
+import { MatExpansionModule } from "@angular/material/expansion";
 
 
 @NgModule({
@@ -27,6 +29,7 @@ import { ListItemComponent } from './components/utils/list-item/list-item.compon
     NotebarComponent,
     NavbarNewSubjectComponent,
     ListItemComponent,
+    CombinebarComponent,
   ],
   imports: [
     CommonModule,
@@ -42,6 +45,7 @@ import { ListItemComponent } from './components/utils/list-item/list-item.compon
     MatInputModule,
     ReactiveFormsModule,
     FormsModule,
+    MatExpansionModule,
   ],
   exports: [
     MainComponent,

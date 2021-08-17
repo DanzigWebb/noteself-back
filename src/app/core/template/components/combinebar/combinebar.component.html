@@ -1,0 +1,35 @@
+<div class="combinebar">
+    <mat-accordion *ngIf="notes.state$ | async as state">
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    All Subjects
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-nav-list>
+                <app-list-item
+                    title="New Note"
+                    icon="add_circle"
+                    (click)="create()">
+                </app-list-item>
+                <ng-container *ngFor="let item of state.checkedNotes | keyvalue">
+                    <app-list-item
+                        [title]="item.value.title"
+                        [description]="item.value.description"
+                        [updatedAt]="item.value.updatedAt"
+                        [isActive]="item.value.id === state.editNote?.id"
+                        [withMenu]="true"
+
+                        icon="splitscreen"
+                        color="accent"
+                        (click)="check(item.value)"
+                        (onDelete)="delete(item.value)">
+                    </app-list-item>
+
+                    <mat-divider></mat-divider>
+                </ng-container>
+            </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

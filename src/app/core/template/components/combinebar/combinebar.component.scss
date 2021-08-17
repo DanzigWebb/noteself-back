@@ -1,0 +1,9 @@
+@import "src/styles/vars";
+
+.combinebar {
+	max-width: 200px;
+	
+	::ng-deep .mat-expansion-panel-body {
+		padding: $gutter / 6;
+	}
+}
