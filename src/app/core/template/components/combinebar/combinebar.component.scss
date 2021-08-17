@@ -5,8 +5,22 @@
 	max-width: 200px;
 	box-shadow: 3px 0 5px -3px #000;
 	
+	overflow-y: scroll;
+	
 	::ng-deep .mat-expansion-panel-body {
 		padding: $gutter / 6;
+	}
+	
+	::ng-deep .mat-expansion-panel-header.mat-expanded {
+		height: 48px;
+	}
+	
+	::ng-deep .mat-list-base {
+		padding-top: 0;
+	}
+	
+	::ng-deep .mat-expansion-panel {
+		background: inherit;
 	}
 	
 	&-title {
