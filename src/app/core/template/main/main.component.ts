@@ -5,11 +5,13 @@ import { Routers } from "@core/enums/routers.enum";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { map } from "rxjs/operators";
 import { UiFacade } from "@state/ui/ui.facade";
+import { SlideAnimation } from "@shared/animations/slide";
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
+  animations: [SlideAnimation]
 })
 export class MainComponent implements OnInit {
 

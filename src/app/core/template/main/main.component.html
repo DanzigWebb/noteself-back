@@ -12,9 +12,13 @@
         </ng-container>
 
         <ng-template #mobileBar>
-            <app-combinebar *ngIf="(ui.combinebar$ | async)?.isOpen"></app-combinebar>
+            <app-combinebar
+                [@SlideAnimation]="(ui.combinebar$ | async)?.isOpen
+                    ? 'open'
+                    : 'closed'"
+            >
+            </app-combinebar>
         </ng-template>
-
 
         <div class="main-content">
             <router-outlet></router-outlet>
