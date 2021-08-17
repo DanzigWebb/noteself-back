@@ -51,6 +51,11 @@ export class UiState {
     return s.navbar;
   }
 
+  @Selector()
+  static combinebar(s: UiStateModel): CombinebarStateModel {
+    return s.combinebar;
+  }
+
   constructor(
     @Inject(UI_STORAGE) private storage: UiStorage,
   ) {

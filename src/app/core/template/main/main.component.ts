@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Routers } from "@core/enums/routers.enum";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { map } from "rxjs/operators";
+import { UiFacade } from "@state/ui/ui.facade";
 
 @Component({
   selector: 'app-main',
@@ -20,7 +21,8 @@ export class MainComponent implements OnInit {
   constructor(
     private userFacade: UserFacade,
     private router: Router,
-    public breakpointObserver: BreakpointObserver
+    public breakpointObserver: BreakpointObserver,
+    public ui: UiFacade
   ) {
   }
 

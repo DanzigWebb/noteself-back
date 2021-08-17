@@ -7,6 +7,7 @@ import { NoteSubject } from "@models/subject.interface";
 import { Note } from "@models/note.interface";
 import { NoteMap } from "@state/note/note.state";
 import { Router } from "@angular/router";
+import { UiFacade } from "@state/ui/ui.facade";
 
 @Component({
   selector: 'app-combinebar',
@@ -22,6 +23,7 @@ export class CombinebarComponent implements OnInit {
     public notes: NoteFacade,
     private subjects: SubjectFacade,
     private router: Router,
+    private ui: UiFacade
   ) {
   }
 
@@ -48,7 +50,9 @@ export class CombinebarComponent implements OnInit {
   }
 
   check(n: Note) {
-    this.router.navigate(['edit', n.id]);
+    this.router.navigate(['edit', n.id]).then(() => {
+      this.ui.combinebar.hide();
+    });
   }
 
   delete(n: Note) {

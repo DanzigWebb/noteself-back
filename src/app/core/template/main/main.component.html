@@ -1,6 +1,7 @@
 <div class="page">
     <app-header
         [userState]="userState$ | async"
+        [isMobile]="isMobile$ | async"
         (logout)="logout()">
     </app-header>
 
@@ -11,7 +12,7 @@
         </ng-container>
 
         <ng-template #mobileBar>
-            <app-combinebar></app-combinebar>
+            <app-combinebar *ngIf="(ui.combinebar$ | async)?.isOpen"></app-combinebar>
         </ng-template>
 
 

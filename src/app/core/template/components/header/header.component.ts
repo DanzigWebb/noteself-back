@@ -21,11 +21,17 @@ import { map } from "rxjs/operators";
 })
 export class HeaderComponent implements OnInit, OnChanges {
 
-  @Input() userState: UserStateModel | null = null;
   @Output() logout = new EventEmitter();
+
+  @Input() userState: UserStateModel | null = null;
+  @Input() isMobile: boolean | null = false;
+
 
   public user: UserDto | undefined;
   public isOpenSidebar$ = this.ui.sidebar$.pipe(
+    map((s) => s.isOpen),
+  );
+  public isOpenCombinebar$ = this.ui.combinebar$.pipe(
     map((s) => s.isOpen),
   );
 
@@ -43,8 +49,12 @@ export class HeaderComponent implements OnInit, OnChanges {
     }
   }
 
-  toggleSidebar() {
+  toggleNavbar() {
     this.ui.navbar.toggle();
+  }
+
+  toggleCombinebar() {
+    this.ui.combinebar.toggle();
   }
 
   onLogout(): void {

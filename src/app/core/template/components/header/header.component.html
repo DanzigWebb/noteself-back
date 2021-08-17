@@ -3,11 +3,26 @@
         <!--<div class="header-logo">header</div>-->
         <button
             mat-icon-button
-            (click)="toggleSidebar()">
+            *ngIf="!isMobile"
+            (click)="toggleNavbar()">
             <mat-icon
                 class="header-sidebar-icon"
                 color="primary"
                 [class.rotate]="!(isOpenSidebar$ | async)"
+                matTooltip="Toggle Sidebar"
+            >
+                arrow_back_ios_new
+            </mat-icon>
+        </button>
+
+        <button
+            mat-icon-button
+            *ngIf="isMobile"
+            (click)="toggleCombinebar()">
+            <mat-icon
+                class="header-sidebar-icon"
+                color="primary"
+                [class.rotate]="!(isOpenCombinebar$ | async)"
                 matTooltip="Toggle Sidebar"
             >
                 arrow_back_ios_new

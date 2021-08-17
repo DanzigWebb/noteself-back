@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
-import { NavbarStateModel, UiState, UiStateModel } from "@state/ui/ui.state";
+import { CombinebarStateModel, NavbarStateModel, UiState, UiStateModel } from "@state/ui/ui.state";
 import { Observable } from "rxjs";
 import { UiActions } from "@state/ui/ui.actions";
 
@@ -8,6 +8,7 @@ import { UiActions } from "@state/ui/ui.actions";
 export class UiFacade {
   @Select(UiState.state) state$!: Observable<UiStateModel>;
   @Select(UiState.navbar) sidebar$!: Observable<NavbarStateModel>;
+  @Select(UiState.combinebar) combinebar$!: Observable<CombinebarStateModel>;
 
   constructor(
     private store: Store,
