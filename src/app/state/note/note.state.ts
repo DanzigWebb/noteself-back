@@ -153,7 +153,7 @@ export class NoteState {
     notes.set(note.id, {...note, isUpdated, updatedAt});
     checkedNotes.set(note.id, {...note, isUpdated, updatedAt});
 
-    setState({...state, notes, checkedNotes});
+    setState({...state, notes: new Map<number, Note>(notes), checkedNotes: new Map<number, Note>(checkedNotes)});
   }
 
   @Action(NoteActions.Save)

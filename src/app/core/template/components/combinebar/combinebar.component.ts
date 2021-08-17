@@ -21,9 +21,9 @@ export class CombinebarComponent implements OnInit {
 
   constructor(
     public notes: NoteFacade,
-    private subjects: SubjectFacade,
+    public subjects: SubjectFacade,
     private router: Router,
-    private ui: UiFacade
+    private ui: UiFacade,
   ) {
   }
 
@@ -59,9 +59,14 @@ export class CombinebarComponent implements OnInit {
     this.notes.delete(n.id);
   }
 
-  create() {
+  create(s: NoteSubject | null) {
+    this.checkSubject(s);
     this.notes.create().subscribe(() => {
       this.ui.combinebar.hide();
     });
+  }
+
+  checkSubject(s: NoteSubject | null) {
+    this.subjects.check(s?.id || -1);
   }
 }
