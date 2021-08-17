@@ -19,6 +19,7 @@ import { take } from "rxjs/operators";
 import { UiStateModel } from "@state/ui/ui.state";
 import { UI_STORAGE, UiStorage } from "@shared/storages/ui.storage";
 import { UiFacade } from "@state/ui/ui.facade";
+import { InterceptorsModule } from "@core/interceptors/interceptors.module";
 
 // Todo: вынести в InitModule
 function initializeApp(storage: UserStorage, uiStorage: UiStorage, uiFacade: UiFacade, user: UserFacade, note: NoteFacade, subject: SubjectFacade): () => Promise<any> {
@@ -71,6 +72,8 @@ function initializeApp(storage: UserStorage, uiStorage: UiStorage, uiFacade: UiF
     StartPageModule,
     // State
     StateModule,
+    // interceptors
+    InterceptorsModule
   ],
   providers: [{
     provide: APP_INITIALIZER,
