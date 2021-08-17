@@ -5,8 +5,15 @@
     </app-header>
 
     <main class="main">
-        <app-navbar></app-navbar>
-        <app-notebar></app-notebar>
+        <ng-container *ngIf="!(isMobile$ | async); else mobileBar">
+            <app-navbar></app-navbar>
+            <app-notebar></app-notebar>
+        </ng-container>
+
+        <ng-template #mobileBar>
+            <app-combinebar></app-combinebar>
+        </ng-template>
+
 
         <div class="main-content">
             <router-outlet></router-outlet>

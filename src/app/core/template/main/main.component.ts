@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserFacade } from "@state/user/user.facade";
 import { Router } from "@angular/router";
 import { Routers } from "@core/enums/routers.enum";
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-main',
@@ -11,10 +13,14 @@ import { Routers } from "@core/enums/routers.enum";
 export class MainComponent implements OnInit {
 
   public userState$ = this.userFacade.state$;
+  public isMobile$ = this.breakpointObserver.observe(Breakpoints.XSmall).pipe(
+    map(state => state.matches)
+  )
 
   constructor(
     private userFacade: UserFacade,
     private router: Router,
+    public breakpointObserver: BreakpointObserver
   ) {
   }
 

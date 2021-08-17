@@ -7,6 +7,12 @@
 		background-color: #212121;
 	}
 	
+	::ng-deep .mat-list-item-content {
+		@media (max-width: 600px) {
+			padding: 0 4px;
+		}
+	}
+	
 	&-icon {
 		font-size: 14px;
 		@include flex(row, center, center);
