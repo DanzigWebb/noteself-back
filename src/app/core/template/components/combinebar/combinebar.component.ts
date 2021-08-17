@@ -60,6 +60,8 @@ export class CombinebarComponent implements OnInit {
   }
 
   create() {
-    this.notes.create();
+    this.notes.create().subscribe(() => {
+      this.ui.combinebar.hide();
+    });
   }
 }
