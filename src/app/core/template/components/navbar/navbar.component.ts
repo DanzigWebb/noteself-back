@@ -4,6 +4,7 @@ import { map, takeUntil } from "rxjs/operators";
 import { NoteSubject, NoteSubjectCreateDto } from "@models/subject.interface";
 import { SubjectFacade } from "@state/subject/subject.facade";
 import { Subject } from "rxjs";
+import { SlideAnimation } from "@shared/animations/slide";
 
 enum DragLimits {
   min = 80,
@@ -14,6 +15,7 @@ enum DragLimits {
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
+  animations: [SlideAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent implements OnInit, OnDestroy {
@@ -47,10 +49,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   setWidth(e: number) {
     this.ui.navbar.setWidth(e);
-    if (e === DragLimits.min) {
-      this.ui.navbar.hide();
-      this.ui.navbar.setWidth(e + 20);
-    }
   }
 
   check(item: NoteSubject | null) {

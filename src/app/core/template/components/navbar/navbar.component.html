@@ -1,9 +1,15 @@
-<div class="navbar" *ngIf="isOpen$ | async">
+<div
+    class="navbar"
+    [@SlideAnimation]="(isOpen$ | async)
+        ? 'open'
+        : 'closed'"
+>
     <app-drag-column
         (onDrag)="setWidth($event)"
         [maxWidth]="dragLimits.max"
         [minWidth]="dragLimits.min"
         [width]="width"
+        class="navbar-column"
     >
         <div class="navbar-inner">
             <mat-nav-list class="subjects" *ngIf="subjectFacade.state$ | async as state">
